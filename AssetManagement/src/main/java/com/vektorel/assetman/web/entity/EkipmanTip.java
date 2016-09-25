@@ -1,5 +1,13 @@
 package com.vektorel.assetman.web.entity;
 
-public class EkipmanTip {
+/**
+ * 
+ * @author recep
+ *
+ */
+public class EkipmanTip extends BaseEntity{
 
+	Long id;
+	String tanim;
+	String kod;
 }

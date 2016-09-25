@@ -2,13 +2,10 @@ package com.vektorel.assetman.web.entity;
 
 /**
  * 
- * @author saliha
+ * @author heroglu
  *
  */
-public class Proje extends BaseEntity{
-
+public class Yetki extends BaseEntity{
 	Long id;
 	String adi;
-	String kod;
-	
 }

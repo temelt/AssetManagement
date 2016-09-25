@@ -1,5 +1,15 @@
 package com.vektorel.assetman.web.entity;
 
-public class Lokasyon {
+/**
+ * 
+ * @author ege
+ *
+ */
+public class Lokasyon extends BaseEntity{
 
+	Long id;
+	String tanim;
+	String kod;
+	
+	
 }

@@ -1,5 +1,13 @@
 package com.vektorel.assetman.web.entity;
 
-public class Rol {
+/**
+ * 
+ * @author heroglu
+ *
+ */
+public class Rol extends BaseEntity{
 
+	Long id;
+	String tanim;
+	String kod;
 }
