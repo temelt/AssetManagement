@@ -25,6 +25,24 @@ public class Kisi extends BaseEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	public Kisi() {
+	}
+	
+	
+	public Kisi(Long id, String ad, String soyad, String tc, Date dogumTarihi,
+			Adres adres, Kullanici kullanici) {
+		super();
+		this.id = id;
+		this.ad = ad;
+		this.soyad = soyad;
+		this.tc = tc;
+		this.dogumTarihi = dogumTarihi;
+		this.adres = adres;
+		this.kullanici = kullanici;
+	}
+
+
 	Long id;
 	String ad;
 	String soyad;

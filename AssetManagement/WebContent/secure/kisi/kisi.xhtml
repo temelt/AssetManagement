@@ -1,10 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
-</body>
+<h:head>
+	<title>Asset Management System</title>
+</h:head>
+<h:body bgcolor="white">
+
+	<h:form id="frm">
+		<p:dataTable id="tblKisi" var="k" value="#{kisiView.kisis}" rows="10"
+			paginator="true"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15">
+			<p:column headerText="No">
+				<h:outputText value="#{k.id}" />
+			</p:column>
+
+			<p:column headerText="Ad">
+				<h:outputText value="#{k.ad}" />
+			</p:column>
+
+			<p:column headerText="Soyad">
+				<h:outputText value="#{k.soyad}" />
+			</p:column>
+
+			<p:column headerText="TCKN">
+				<h:outputText value="#{k.tc}" />
+			</p:column>
+
+			<p:column headerText="Doğum Tarihi">
+				<h:outputText value="#{k.dogumTarihi}" />
+			</p:column>
+			<p:column headerText="İşlemler">
+				<p:commandButton icon="ui-icon-trash" actionListener="#{kisiView.sil(k.id)}" update=":frm:tblKisi"></p:commandButton>
+				<p:commandButton icon="ui-icon-pencil" ></p:commandButton>
+			</p:column>
+		</p:dataTable>
+		<p:commandButton value="Yeni" type="button"
+			onclick="PF('dlg2').show();" />
+
+		<p:dialog header="Kişi Bilgileri" draggable="false" resizable="false"
+			id="dlg2" widgetVar="dlg2" modal="true" >
+			<p:panelGrid columns="2">
+
+				<h:outputText value="Ad:" />
+				<p:inputText value="#{kisiView.kisi.ad}" />
+
+				<h:outputText value="Soyad:" />
+				<p:inputText value="#{kisiView.kisi.soyad}" />
+
+				<h:outputText value="TC:" />
+				<p:inputText value="#{kisiView.kisi.tc}" />
+
+				<h:outputText value="Doğum Tarihi :" />
+				<p:calendar value="#{kisiView.kisi.dogumTarihi}"  ></p:calendar>
+
+			</p:panelGrid>
+			<p:commandButton value="Kaydet" actionListener="#{kisiView.kaydet}" update=":frm:tblKisi, :frm:dlg2" oncomplete="PF('dlg2').hide();"></p:commandButton>
+		</p:dialog>
+	</h:form>
+</h:body>
 </html>

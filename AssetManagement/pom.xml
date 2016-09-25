@@ -6,44 +6,45 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
+	<properties>
+		<servlet.version>1.2</servlet.version>
+		<faces.version>2.1.6</faces.version>
+		<javassist.version>3.18.1-GA</javassist.version>
+	</properties>
+
 	<dependencies>
-		<dependency>
-			<groupId>org.primefaces</groupId>
-			<artifactId>primefaces</artifactId>
-			<version>6.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.faces</groupId>
-			<artifactId>jsf-api</artifactId>
-			<version>2.1.7</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.faces</groupId>
-			<artifactId>jsf-impl</artifactId>
-			<version>2.1.7</version>
-		</dependency>
 
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
 
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.1-901.jdbc3</version>
 		</dependency>
 
 		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.1</version>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>4.3.0.Final</version>
 		</dependency>
 		<dependency>
-			<groupId>postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.1-901.jdbc4</version>
+			<groupId>antlr</groupId>
+			<artifactId>antlr</artifactId>
+			<version>2.7.7</version>
+		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.common</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>4.0.4.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
@@ -51,73 +52,90 @@
 			<version>1.0.0.Final</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>4.3.0.Final</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate.common</groupId>
-			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>4.0.4.Final</version>
+			<groupId>org.jboss</groupId>
+			<artifactId>jandex</artifactId>
+			<version>1.1.0.Final</version>
 		</dependency>
 		<dependency>
-			<artifactId>antlr</artifactId>
-			<groupId>antlr</groupId>
-			<type>jar</type>
-			<version>2.7.7</version>
-		</dependency>
-		<dependency>
-			<artifactId>dom4j</artifactId>
-			<groupId>dom4j</groupId>
-			<type>jar</type>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<artifactId>javassist</artifactId>
-			<groupId>org.javassist</groupId>
-			<type>jar</type>
-			<version>3.18.1-GA</version>
-		</dependency>
-		<dependency>
-			<artifactId>jboss-logging</artifactId>
 			<groupId>org.jboss.logging</groupId>
-			<type>jar</type>
+			<artifactId>jboss-logging</artifactId>
 			<version>3.1.3.GA</version>
 		</dependency>
 		<dependency>
-			<artifactId>jboss-logging-annotations</artifactId>
+			<groupId>org.jboss.spec.javax.transaction</groupId>
+			<artifactId>jboss-transaction-api_1.2_spec</artifactId>
+			<version>1.0.0.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.18.1-GA</version>
+		</dependency>
+		<dependency>
 			<groupId>org.jboss.logging</groupId>
-			<type>jar</type>
+			<artifactId>jboss-logging-annotations</artifactId>
 			<version>1.2.0.Beta1</version>
-		</dependency>
-		<dependency>
-			<artifactId>xml-apis</artifactId>
-			<groupId>xml-apis</groupId>
-			<type>jar</type>
-			<version>1.0.b2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate</artifactId>
-			<version>3.2.5.ga</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>jta</artifactId>
-					<groupId>javax.transaction</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>3.3.2.GA</version>
+			<version>4.3.1.Final</version>
 		</dependency>
 		<dependency>
-			<groupId>com.sun.el</groupId>
-			<artifactId>el-ri</artifactId>
-			<version>1.0</version>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>6.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>${faces.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>${faces.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${servlet.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>${servlet.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.annotation</artifactId>
+			<version>3.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>antlr</groupId>
+			<artifactId>antlr</artifactId>
+			<version>2.7.7</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
