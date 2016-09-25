@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-@ManagedBean(name = "indexView")
+@ManagedBean(name = "indexView",eager=true)
 @ViewScoped
 public class IndexView implements Serializable {
 
