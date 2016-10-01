@@ -2,10 +2,12 @@ package com.vektorel.assetman.web.view;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
-@ManagedBean(name = "indexView",eager=true)
+@ManagedBean(name = "indexView")
 @ViewScoped
 public class IndexView implements Serializable {
 
@@ -17,6 +19,10 @@ public class IndexView implements Serializable {
 	private String message = "Merhaba Mehmet";
 	
 
+	@PostConstruct
+	private void init(){
+	}
+	
 	public void kaydet() {
 		System.out.println(message );
 	}

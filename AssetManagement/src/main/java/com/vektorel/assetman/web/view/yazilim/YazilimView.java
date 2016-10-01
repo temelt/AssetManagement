@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import com.vektorel.assetman.web.entity.Yazilim;
 import com.vektorel.assetman.web.service.yazilim.YazilimService;
@@ -22,11 +21,6 @@ public class YazilimView implements Serializable{
 	
 	@PostConstruct
 	private void init() {
-		
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		HttpSession session = (HttpSession)facesContext.getExternalContext().getSession(false);
-		if(session == null && facesContext.getExternalContext() !=null)
-		   session = (HttpSession)facesContext.getExternalContext().getSession(true);
 		
 		yazilim=new Yazilim();
 		yazilimService=new YazilimService();

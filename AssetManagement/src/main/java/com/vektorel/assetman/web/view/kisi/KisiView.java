@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import com.vektorel.assetman.web.entity.Kisi;
 import com.vektorel.assetman.web.service.kisi.KisiService;
@@ -27,11 +26,6 @@ public class KisiView implements Serializable{
 	
 	@PostConstruct
 	private void init() {
-		
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		HttpSession session = (HttpSession)facesContext.getExternalContext().getSession(false);
-		if(session == null && facesContext.getExternalContext() !=null)
-		   session = (HttpSession)facesContext.getExternalContext().getSession(true);
 		
 		kisi=new Kisi();
 		kisiService=new KisiService();
