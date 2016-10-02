@@ -3,13 +3,17 @@ package com.vektorel.assetman.web.view.kisi;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
+
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 
 import com.vektorel.assetman.web.entity.Kisi;
 import com.vektorel.assetman.web.service.kisi.KisiService;
+import com.vektorel.assetman.web.utilities.PagingResult;
 
 
 @ManagedBean(name="kisiView")
@@ -20,33 +24,49 @@ public class KisiView implements Serializable{
 	 */
 	private static final long serialVersionUID = -6657286050378044309L;
 	
-	List<Kisi> kisis=new ArrayList<Kisi>();
 	KisiService kisiService=null;
 	Kisi kisi;
+	LazyDataModel<Kisi> lazyModel;
 	
 	@PostConstruct
 	private void init() {
 		
 		kisi=new Kisi();
 		kisiService=new KisiService();
-		kisis=kisiService.getAll();
+		listele();
 	}
 	
 	public void kaydet() {
 		kisiService.save(kisi);
 		kisi=new Kisi();
-		kisis=kisiService.getAll();
+		listele();
 	}
 	
 	public void sil(Long id) {
 		kisiService.delete(id);
 		kisi=new Kisi();
-		kisis=kisiService.getAll();
+		listele();
 	}
 	
-	public List<Kisi> getKisis() {
-		return kisis;
+	public void listele(){
+		lazyModel=new LazyDataModel<Kisi>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8620783067167021310L;
+
+			@Override
+			public List<Kisi> load(int first, int pageSize, String sortField, SortOrder sortOrder,Map<String, Object> filters) {
+			
+				PagingResult result = kisiService.getAllByPaging(first,pageSize,sortOrder , filters);
+				this.setRowCount(result.getRowCount());
+				return result.getList();
+			}
+			
+			
+		};
 	}
+
 	
 	public Kisi getKisi() {
 		return kisi;
@@ -54,6 +74,10 @@ public class KisiView implements Serializable{
 	
 	public void setKisi(Kisi kisi) {
 		this.kisi = kisi;
+	}
+	
+	public LazyDataModel<Kisi> getLazyModel() {
+		return lazyModel;
 	}
 	
 }

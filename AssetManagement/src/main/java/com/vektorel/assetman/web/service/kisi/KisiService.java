@@ -1,10 +1,20 @@
 package com.vektorel.assetman.web.service.kisi;
 
 import java.util.List;
+import java.util.Map;
+
+import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
+import org.primefaces.model.SortOrder;
 
 import com.vektorel.assetman.web.entity.Kisi;
 import com.vektorel.assetman.web.service.BaseDao;
 import com.vektorel.assetman.web.utilities.IDataService;
+import com.vektorel.assetman.web.utilities.PagingResult;
 
 public class KisiService implements IDataService<Kisi>{
 
@@ -39,6 +49,19 @@ public class KisiService implements IDataService<Kisi>{
 
 	public void delete(Long id) {
 		delete(getById(id));		
+	}
+
+	public PagingResult getAllByPaging(int first, int pageSize, SortOrder sortOrder, Map<String, Object> filters) {		
+		Session session = baseDao.getSession();
+		Criteria criteria = session.createCriteria(Kisi.class);
+		
+		int totalResult = Integer.parseInt(criteria.setProjection(Projections.rowCount()).uniqueResult().toString());
+		
+		criteria.setProjection(null);	
+		criteria.setMaxResults(pageSize);
+		criteria.setFirstResult(first);
+		criteria.addOrder(Order.desc("id"));
+		return new PagingResult(criteria.list(), totalResult);
 	}
 
 
