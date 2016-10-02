@@ -13,9 +13,12 @@ import javax.faces.context.FacesContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import com.vektorel.assetman.web.entity.Kisi;
 import com.vektorel.assetman.web.entity.Kullanici;
+import com.vektorel.assetman.web.service.kisi.KisiService;
 import com.vektorel.assetman.web.service.kullanici.KullaniciService;
 import com.vektorel.assetman.web.utilities.PagingResult;
+import com.vektorel.assetman.web.utilities.ex.DbException;
 
 @ManagedBean(name="kullaniciView")
 @ViewScoped
@@ -27,12 +30,13 @@ public class KullaniciView implements Serializable{
 	private static final long serialVersionUID = -6657286050378044309L;
 	
 	KullaniciService kullaniciService=null;
+	KisiService kisiService =null;
 	Kullanici kullanici;
 	LazyDataModel<Kullanici> lazyModel;
 	
 	@PostConstruct
 	private void init() {
-		
+		kisiService=new KisiService();
 		kullanici=new Kullanici();
 		kullaniciService=new KullaniciService();
 		listele();
@@ -47,15 +51,25 @@ public class KullaniciView implements Serializable{
 			}
 			kullanici=new Kullanici();
 			listele();
-		} catch (Exception e) {
+		} catch (DbException e) {
 			FacesContext context = FacesContext.getCurrentInstance();
 	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Hata Oluþtu",  e.getMessage()) );
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
 	
+	public List<Kisi> acompKisi(String term) {
+		return kisiService.acompKisi(term);
+	}
+	
 	public void guncelle(Long id) {
 		kullanici=kullaniciService.getById(id);
+	}
+	
+	public void yeni() {
+		kullanici=new Kullanici();
 	}
 	
 	public void sil(Long id) {

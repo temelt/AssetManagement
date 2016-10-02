@@ -17,61 +17,58 @@ import com.vektorel.assetman.web.utilities.IDataService;
 import com.vektorel.assetman.web.utilities.PagingResult;
 import com.vektorel.assetman.web.utilities.ex.DbException;
 
-public class KullaniciService implements IDataService<Kullanici>{
+public class KullaniciService implements IDataService<Kullanici> {
 
-	BaseDao baseDao=new BaseDao();
-	
+	BaseDao baseDao = new BaseDao();
+
 	@Override
 	public Kullanici save(Kullanici entity) throws DbException {
-		// TODO Auto-generated method stub
-		return null;
+		return (Kullanici) baseDao.save(entity);
 	}
 
 	@Override
 	public Kullanici update(Kullanici entity) throws DbException {
-		// TODO Auto-generated method stub
-		return null;
+		return (Kullanici) baseDao.update(entity);
 	}
 
 	public void delete(Long id) {
-		
 		try {
 			delete(getById(id));
 		} catch (DbException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 	}
-	
+
 	@Override
 	public boolean delete(Kullanici entity) throws DbException {
-		// TODO Auto-generated method stub
-		return false;
+		return baseDao.delete(entity);
 	}
 
 	@Override
 	public List<Kullanici> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return baseDao.getAll(Kullanici.class);
 	}
 
 	@Override
 	public Kullanici getById(Long entityId) {
-		// TODO Auto-generated method stub
-		return null;
+		return (Kullanici) baseDao.getById(entityId, Kullanici.class);
 	}
-	
-	public PagingResult getAllByPaging(int first, int pageSize, SortOrder sortOrder, Map<String, Object> filters) {		
+
+	public PagingResult getAllByPaging(int first, int pageSize,
+			SortOrder sortOrder, Map<String, Object> filters) {
 		Session session = baseDao.getSession();
 		Criteria criteria = session.createCriteria(Kullanici.class);
-		
-		if(filters.get("username")!=null){
-			criteria.add(Restrictions.ilike("username",filters.get("username").toString(),  MatchMode.ANYWHERE));
+
+		if (filters.get("username") != null) {
+			criteria.add(Restrictions.ilike("username", filters.get("username")
+					.toString(), MatchMode.ANYWHERE));
 		}
-		
-		int totalResult = Integer.parseInt(criteria.setProjection(Projections.rowCount()).uniqueResult().toString());
-		
-		criteria.setProjection(null);	
+
+		int totalResult = Integer.parseInt(criteria
+				.setProjection(Projections.rowCount()).uniqueResult()
+				.toString());
+
+		criteria.setProjection(null);
 		criteria.setMaxResults(pageSize);
 		criteria.setFirstResult(first);
 		criteria.addOrder(Order.desc("id"));

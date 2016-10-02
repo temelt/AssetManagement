@@ -2,9 +2,12 @@ package com.vektorel.assetman.web.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -26,6 +29,8 @@ public class Kullanici extends BaseEntity{
 	private Kisi kisi;
 	
 	@Id
+	@SequenceGenerator(allocationSize=1,name="seq_kullanici",sequenceName="seq_kullanici")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="seq_kullanici")
 	public Long getId() {
 		return id;
 	}

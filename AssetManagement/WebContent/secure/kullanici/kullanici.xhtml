@@ -48,7 +48,7 @@
 			    </p:confirmDialog>
 			</p:column>
 			<f:facet name="footer">
-				 <p:commandButton value="Yeni" type="button" onclick="PF('dlg2').show();" />
+				 <p:commandButton value="Yeni" update=":frm:dlg2" action="#{kullaniciView.yeni}" oncomplete="PF('dlg2').show();" />
 			</f:facet>
 		</p:dataTable>
 		
@@ -57,21 +57,18 @@
 			id="dlg2" widgetVar="dlg2" modal="true" >
 			<p:panelGrid columns="2">
 
-				<h:outputText value="Ad:" />
-				<p:inputText value="#{kullaniciView.kullanici.ad}" />
+				<p:outputLabel value="Kullanıcı Kişisi :"  />
+		        <p:autoComplete id="acompKisi" value="#{kullaniciView.kullanici.kisi}" completeMethod="#{kullaniciView.acompKisi}"
+		                        var="kisi" itemLabel="#{kisi.adSoyad}" itemValue="#{kisi}" converter="kisiConverter" forceSelection="true">
+		        </p:autoComplete>
 
 				<h:outputText value="Kullanıcı Adı :" />
 				<p:inputText value="#{kullaniciView.kullanici.username}" />
 
 				<h:outputText value="Şifre :" />
-				<p:inputText value="#{kullaniciView.kullanici.password}" />
+				<p:password value="#{kullaniciView.kullanici.password}" />
 
-				<h:outputText value="Şifre Tekrar :" />
-				<p:inputText  />
 				
-				<h:outputText value="Doğum Tarihi :" />
-				<p:calendar value="#{kullaniciView.kullanici.dogumTarihi}"  ></p:calendar>
-
 			</p:panelGrid>
 			<p:commandButton value="Kaydet" actionListener="#{kullaniciView.kaydet}" update=":frm:tblKullanici, :frm:dlg2 " oncomplete="PF('dlg2').hide();"></p:commandButton>
 		</p:dialog>

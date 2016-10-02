@@ -9,7 +9,7 @@
 
 	<h:form id="frm">
 	
-	<p:growl id="growl" showDetail="true"  autoUpdate="true" sticky="true" /> 
+	<p:growl id="growl" showDetail="true" life="5000" autoUpdate="true" sticky="false" /> 
 	
 		<p:dataTable id="tblKisi" var="k" value="#{kisiView.lazyModel}" lazy="true" rows="10"
 			paginator="true" rowKey="#{k.id}"

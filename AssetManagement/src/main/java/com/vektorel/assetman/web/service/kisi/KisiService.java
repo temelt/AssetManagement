@@ -72,5 +72,15 @@ public class KisiService implements IDataService<Kisi>{
 		return new PagingResult(criteria.list(), totalResult);
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Kisi> acompKisi(String term) {
+		Session session = baseDao.getSession();
+		Criteria criteria = session.createCriteria(Kisi.class);		
+		criteria.add(Restrictions.or(Restrictions.ilike("ad",term,MatchMode.ANYWHERE),
+									 Restrictions.ilike("soyad",term,MatchMode.ANYWHERE) ));		
+		criteria.addOrder(Order.asc("ad"));
+		return criteria.list();
+	}
+
 
 }

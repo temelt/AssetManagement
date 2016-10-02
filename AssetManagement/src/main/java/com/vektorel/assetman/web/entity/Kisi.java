@@ -12,6 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 /**
  * 
  * @author ttemel
@@ -42,12 +43,13 @@ public class Kisi extends BaseEntity {
 	}
 
 
-	Long id;
-	String ad;
-	String soyad;
-	String tc;
-	Date dogumTarihi;
-	Adres adres;
+	private Long id;
+	private String ad;
+	private String soyad;
+	private String tc;
+	private Date dogumTarihi;
+	private Adres adres;
+	private String adSoyad;
 
 	@Id
 	@SequenceGenerator(allocationSize=1,name="seq_kisi",sequenceName="seq_kisi")
@@ -101,5 +103,13 @@ public class Kisi extends BaseEntity {
 		this.adres = adres;
 	}
 
+	@Transient
+	public String getAdSoyad() {
+		return this.ad +" "+ this.soyad;
+	}
+	
+	public void setAdSoyad(String adSoyad) {
+		this.adSoyad = adSoyad;
+	}
 
 }
