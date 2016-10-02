@@ -57,7 +57,6 @@ public class KullaniciView implements Serializable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 	
 	public List<Kisi> acompKisi(String term) {
