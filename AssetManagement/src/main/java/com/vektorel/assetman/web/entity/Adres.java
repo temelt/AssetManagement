@@ -7,6 +7,10 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Adres implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4557554633029220551L;
 	String acikAdres;
 	String email;
 	String tel;

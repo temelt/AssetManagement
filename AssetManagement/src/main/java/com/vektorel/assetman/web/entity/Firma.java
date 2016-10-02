@@ -1,5 +1,11 @@
 package com.vektorel.assetman.web.entity;
 
+
+/**
+ * 
+ * @author hsn196
+ *
+ */
 public class Firma extends BaseEntity {
 
 	Long id;
