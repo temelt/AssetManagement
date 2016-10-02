@@ -5,9 +5,11 @@ import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 
 import com.vektorel.assetman.web.entity.Yetki;
@@ -51,10 +53,14 @@ public class YetkiService implements IDataService<Yetki> {
 			SortOrder sortOrder, Map<String, Object> filters) {
 		Session s = baseDao.getSession();
 		Criteria criteria = s.createCriteria(Yetki.class);
+		if (filters.get("adi") != null) {
+			criteria.add(Restrictions.ilike("adi",filters.get("adi").toString(), MatchMode.ANYWHERE));
+		}
+		int totalResult = Integer.parseInt(criteria
+				.setProjection(Projections.rowCount()).uniqueResult()
+				.toString());
 
-		int totalResult = Integer.parseInt(criteria.setProjection(Projections.rowCount()).uniqueResult().toString());
-		
-		criteria.setProjection(null);	
+		criteria.setProjection(null);
 		criteria.setMaxResults(pageSize);
 		criteria.setFirstResult(first);
 		criteria.addOrder(Order.desc("id"));

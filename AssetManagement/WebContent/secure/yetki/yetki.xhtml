@@ -6,20 +6,28 @@
 	template="/layout/template.xhtml">
 	<ui:define name="pageContent">
 		<h:form id="frm">
+		
 			<p:dataTable id="tblYetki" var="yetki" value="#{yetkiView.lazyModel}" lazy="true" dataLocale="tr"
 				rows="10" paginator="true"
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10,15">
+				
+        <f:facet name="header">
+            <p:outputPanel>
+            <p:commandButton value="Yeni" type="button" onclick="PF('dlg').show();" style="float:left" />
+                <h:outputText value="Yetki Listesi" />
+            </p:outputPanel>
+        </f:facet>
 				<p:column headerText="No">
 					<h:outputText value="#{yetki.id}" />
 				</p:column>
 	
-				<p:column headerText="Ad">
+				<p:column headerText="Ad" filterBy="#{yetki.adi}">
 					<h:outputText value="#{yetki.adi}" />
 				</p:column>
 				<p:column headerText="İşlemler">
-					<p:commandButton actionListener="#{yetkiView.getById(yetki.id)}" oncomplete="PF('dlg').show();"
-						icon="ui-icon-pencil" update=":frm:dlg"/>
+					<p:commandButton actionListener="#{yetkiView.getById(yetki.id)}" update=":frm:dlg" oncomplete="PF('dlg').show();"
+						icon="ui-icon-pencil" />
 					<p:commandButton icon="ui-icon-trash" actionListener="#{yetkiView.sil(yetki.id)}"  update=":frm:tblYetki">
 						<p:confirm header="Onay Ekranı"
 							message="Silmek istediğinize emin misiniz?" icon="ui-icon-alert" />
@@ -33,7 +41,7 @@
 					</p:confirmDialog>
 				</p:column>
 			</p:dataTable>
-			<p:commandButton value="Yeni" type="button" onclick="PF('dlg').show();" />
+			
 	
 			<p:dialog header="Yetki Bilgileri" draggable="false" resizable="false"
 				id="dlg" widgetVar="dlg" modal="true">

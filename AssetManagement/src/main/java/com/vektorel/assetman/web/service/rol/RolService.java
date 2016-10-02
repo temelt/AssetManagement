@@ -5,8 +5,10 @@ import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 
 import com.vektorel.assetman.web.entity.Rol;
@@ -50,7 +52,12 @@ public class RolService implements IDataService<Rol> {
 	public PagingResult getAllByPaging(int first, int pageSize,SortOrder sortOrder, Map<String, Object> filters) {
 		Session session = baseDao.getSession();
 		Criteria criteria = session.createCriteria(Rol.class);
-		
+		if(filters.get("tanim")!=null){
+			criteria.add(Restrictions.ilike("tanim",filters.get("tanim").toString(),  MatchMode.ANYWHERE));
+		}		
+		if(filters.get("kod")!=null){
+			criteria.add(Restrictions.ilike("kod",filters.get("kod").toString(),  MatchMode.ANYWHERE));
+		}
 		int totalResult = Integer.parseInt(criteria.setProjection(Projections.rowCount()).uniqueResult().toString());
 		
 		criteria.setProjection(null);	
