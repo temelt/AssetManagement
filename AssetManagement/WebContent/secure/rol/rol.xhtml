@@ -1,0 +1,59 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/layout/template.xhtml">
+	<ui:define name="pageContent">
+		<h:form id="frm">
+			<p:dataTable id="tblRol" var="rol" value="#{rolView.lazyModel}" lazy="true"
+				rows="10" paginator="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" >
+				<p:column headerText="No">
+					<h:outputText value="#{rol.id}" />
+				</p:column>
+	
+				<p:column headerText="Tanım">
+					<h:outputText value="#{rol.tanim}" />
+				</p:column>
+	
+				<p:column headerText="Kod">
+					<h:outputText value="#{rol.kod}" />
+				</p:column>
+	
+				<p:column headerText="İşlemler">
+					<p:commandButton actionListener="#{rolView.getById(rol.id)}" oncomplete="PF('dlg').show();"
+						icon="ui-icon-pencil" update=":frm:dlg"/>
+					<p:commandButton icon="ui-icon-trash" actionListener="#{rolView.sil(rol.id)}"  update=":frm:tblRol">
+						<p:confirm header="Onay Ekranı"
+							message="Silmek istediğinize emin misiniz?" icon="ui-icon-alert" />
+					</p:commandButton>
+					<p:growl id="message" showDetail="true" />
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Evet" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Hayır" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</p:column>
+			</p:dataTable>
+			<p:commandButton value="Yeni" type="button" onclick="PF('dlg').show();" />
+	
+			<p:dialog header="Rol Bilgileri" draggable="false" resizable="false"
+				id="dlg" widgetVar="dlg" modal="true">
+				<p:panelGrid columns="2">
+	
+					<h:outputText value="Kod:" />
+					<p:inputText value="#{rolView.rol.kod}" />
+	
+					<h:outputText value="Tanım:" />
+					<p:inputText value="#{rolView.rol.tanim}"  />
+	
+				</p:panelGrid>
+				<p:commandButton value="Kaydet" actionListener="#{rolView.kaydet}"
+					update=" :frm:tblRol,:frm:dlg " oncomplete="PF('dlg').hide();"></p:commandButton>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
