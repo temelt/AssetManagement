@@ -31,7 +31,7 @@ public class Kisi extends BaseEntity {
 	
 	
 	public Kisi(Long id, String ad, String soyad, String tc, Date dogumTarihi,
-			Adres adres, Kullanici kullanici) {
+			Adres adres) {
 		super();
 		this.id = id;
 		this.ad = ad;
@@ -39,7 +39,6 @@ public class Kisi extends BaseEntity {
 		this.tc = tc;
 		this.dogumTarihi = dogumTarihi;
 		this.adres = adres;
-		this.kullanici = kullanici;
 	}
 
 
@@ -49,7 +48,6 @@ public class Kisi extends BaseEntity {
 	String tc;
 	Date dogumTarihi;
 	Adres adres;
-	Kullanici kullanici;
 
 	@Id
 	@SequenceGenerator(allocationSize=1,name="seq_kisi",sequenceName="seq_kisi")
@@ -103,14 +101,5 @@ public class Kisi extends BaseEntity {
 		this.adres = adres;
 	}
 
-	@ManyToOne(optional=true)
-	@JoinColumn(name="kullanici_id")
-	public Kullanici getKullanici() {
-		return kullanici;
-	}
-
-	public void setKullanici(Kullanici kullanici) {
-		this.kullanici = kullanici;
-	}
 
 }

@@ -5,9 +5,76 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/layout/template.xhtml">
 	<ui:define name="pageContent">
-	
+
+
 	<h:form id="frm">
 	
+	<p:growl id="growl" showDetail="true"  autoUpdate="true" sticky="true" /> 
 	
+		<p:dataTable id="tblKullanici" var="k" value="#{kullaniciView.lazyModel}" lazy="true" rows="10"
+			paginator="true" rowKey="#{k.id}"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			currentPageReportTemplate="Toplam Kayıt Sayısı {totalRecords} "
+			rowsPerPageTemplate="5,10,15">
+			<f:facet name="header">
+				Tanımlı Kullanıcı Listesi 
+			</f:facet>
+			
+			<p:column headerText="No">
+				<h:outputText value="#{k.id}" />
+			</p:column>
+
+			<p:column headerText="Ad" filterBy="#{k.ad}">
+				<h:outputText value="#{k.kisi.ad}" />
+			</p:column>
+
+			<p:column headerText="Soyad">
+				<h:outputText value="#{k.kisi.soyad}" />
+			</p:column>
+
+			<p:column headerText="Username">
+				<h:outputText value="#{k.username}" />
+			</p:column>
+
+			<p:column headerText="İşlemler">
+				<p:commandButton icon="ui-icon-trash" action="#{kullaniciView.sil(k.id)}" update=":frm:tblKullanici">
+					<p:confirm header="Silme Onayı" message="Silmek İstediginizden Emin misiniz?" icon="ui-icon-alert" />
+				</p:commandButton>
+				<p:commandButton icon="ui-icon-pencil" actionListener="#{kullaniciView.guncelle(k.id)}" oncomplete="PF('dlg2').show();" update=":frm:dlg2 " ></p:commandButton>
+				
+			   <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			        <p:commandButton value="Evet" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="İptal" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			    </p:confirmDialog>
+			</p:column>
+			<f:facet name="footer">
+				 <p:commandButton value="Yeni" type="button" onclick="PF('dlg2').show();" />
+			</f:facet>
+		</p:dataTable>
+		
+
+		<p:dialog header="Kullanıcı Bilgileri" draggable="false" resizable="false"
+			id="dlg2" widgetVar="dlg2" modal="true" >
+			<p:panelGrid columns="2">
+
+				<h:outputText value="Ad:" />
+				<p:inputText value="#{kullaniciView.kullanici.ad}" />
+
+				<h:outputText value="Kullanıcı Adı :" />
+				<p:inputText value="#{kullaniciView.kullanici.username}" />
+
+				<h:outputText value="Şifre :" />
+				<p:inputText value="#{kullaniciView.kullanici.password}" />
+
+				<h:outputText value="Şifre Tekrar :" />
+				<p:inputText  />
+				
+				<h:outputText value="Doğum Tarihi :" />
+				<p:calendar value="#{kullaniciView.kullanici.dogumTarihi}"  ></p:calendar>
+
+			</p:panelGrid>
+			<p:commandButton value="Kaydet" actionListener="#{kullaniciView.kaydet}" update=":frm:tblKullanici, :frm:dlg2 " oncomplete="PF('dlg2').hide();"></p:commandButton>
+		</p:dialog>
 	</h:form>
+	</ui:define>
 </ui:composition>

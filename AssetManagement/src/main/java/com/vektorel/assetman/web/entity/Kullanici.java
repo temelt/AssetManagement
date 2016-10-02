@@ -1,7 +1,10 @@
 package com.vektorel.assetman.web.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -42,6 +45,8 @@ public class Kullanici extends BaseEntity{
 		this.password = password;
 	}
 	
+	@JoinColumn(name="kisi_id")
+	@ManyToOne(optional=true)
 	public Kisi getKisi() {
 		return kisi;
 	}

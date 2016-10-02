@@ -8,6 +8,9 @@
 
 
 	<h:form id="frm">
+	
+	<p:growl id="growl" showDetail="true"  autoUpdate="true" sticky="true" /> 
+	
 		<p:dataTable id="tblKisi" var="k" value="#{kisiView.lazyModel}" lazy="true" rows="10"
 			paginator="true" rowKey="#{k.id}"
 			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -40,11 +43,12 @@
 				<p:commandButton icon="ui-icon-trash" action="#{kisiView.sil(k.id)}" update=":frm:tblKisi">
 					<p:confirm header="Silme Onayı" message="Silmek İstediginizden Emin misiniz?" icon="ui-icon-alert" />
 				</p:commandButton>
-				<p:commandButton icon="ui-icon-pencil" ></p:commandButton>
-				   <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				        <p:commandButton value="Evet" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				        <p:commandButton value="İptal" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-				    </p:confirmDialog>
+				<p:commandButton icon="ui-icon-pencil" actionListener="#{kisiView.guncelle(k.id)}" oncomplete="PF('dlg2').show();" update=":frm:dlg2 " ></p:commandButton>
+				
+			   <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			        <p:commandButton value="Evet" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="İptal" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			    </p:confirmDialog>
 			</p:column>
 			<f:facet name="footer">
 				 <p:commandButton value="Yeni" type="button" onclick="PF('dlg2').show();" />
@@ -69,7 +73,7 @@
 				<p:calendar value="#{kisiView.kisi.dogumTarihi}"  ></p:calendar>
 
 			</p:panelGrid>
-			<p:commandButton value="Kaydet" actionListener="#{kisiView.kaydet}" update=":frm:tblKisi, :frm:dlg2" oncomplete="PF('dlg2').hide();"></p:commandButton>
+			<p:commandButton value="Kaydet" actionListener="#{kisiView.kaydet}" update=":frm:tblKisi, :frm:dlg2 " oncomplete="PF('dlg2').hide();"></p:commandButton>
 		</p:dialog>
 	</h:form>
 	</ui:define>

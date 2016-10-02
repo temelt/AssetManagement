@@ -1,4 +1,4 @@
-package com.vektorel.assetman.web.view.kisi;
+package com.vektorel.assetman.web.view.kullanici;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,40 +13,39 @@ import javax.faces.context.FacesContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import com.vektorel.assetman.web.entity.Kisi;
-import com.vektorel.assetman.web.service.kisi.KisiService;
+import com.vektorel.assetman.web.entity.Kullanici;
+import com.vektorel.assetman.web.service.kullanici.KullaniciService;
 import com.vektorel.assetman.web.utilities.PagingResult;
 
-
-@ManagedBean(name="kisiView")
+@ManagedBean(name="kullaniciView")
 @ViewScoped
-public class KisiView implements Serializable{
+public class KullaniciView implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6657286050378044309L;
 	
-	KisiService kisiService=null;
-	Kisi kisi;
-	LazyDataModel<Kisi> lazyModel;
+	KullaniciService kullaniciService=null;
+	Kullanici kullanici;
+	LazyDataModel<Kullanici> lazyModel;
 	
 	@PostConstruct
 	private void init() {
 		
-		kisi=new Kisi();
-		kisiService=new KisiService();
+		kullanici=new Kullanici();
+		kullaniciService=new KullaniciService();
 		listele();
 	}
 	
 	public void kaydet() {
 		try {
-			if(kisi.getId()!=null){
-				kisiService.update(kisi);
+			if(kullanici.getId()!=null){
+				kullaniciService.update(kullanici);
 			}else{
-				kisiService.save(kisi);
+				kullaniciService.save(kullanici);
 			}
-			kisi=new Kisi();
+			kullanici=new Kullanici();
 			listele();
 		} catch (Exception e) {
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -56,17 +55,17 @@ public class KisiView implements Serializable{
 	}
 	
 	public void guncelle(Long id) {
-		kisi=kisiService.getById(id);
+		kullanici=kullaniciService.getById(id);
 	}
 	
 	public void sil(Long id) {
-		kisiService.delete(id);
-		kisi=new Kisi();
+		kullaniciService.delete(id);
+		kullanici=new Kullanici();
 		listele();
 	}
 	
 	public void listele(){
-		lazyModel=new LazyDataModel<Kisi>() {
+		lazyModel=new LazyDataModel<Kullanici>() {
 			/**
 			 * 
 			 */
@@ -74,16 +73,16 @@ public class KisiView implements Serializable{
 
 			@SuppressWarnings("unchecked")
 			@Override
-			public List<Kisi> load(int first, int pageSize, String sortField, SortOrder sortOrder,Map<String, Object> filters) {
+			public List<Kullanici> load(int first, int pageSize, String sortField, SortOrder sortOrder,Map<String, Object> filters) {
 			
-				PagingResult result = kisiService.getAllByPaging(first,pageSize,sortOrder , filters);
+				PagingResult result = kullaniciService.getAllByPaging(first,pageSize,sortOrder , filters);
 				this.setRowCount(result.getRowCount());
 				return result.getList();
 			}
 			
 			 @Override
-			    public Kisi getRowData(String rowKey) {
-			        for(Kisi k : lazyModel) {
+			    public Kullanici getRowData(String rowKey) {
+			        for(Kullanici k : lazyModel) {
 			            if(k.getId().equals(rowKey))
 			                return k;
 			        }
@@ -95,15 +94,15 @@ public class KisiView implements Serializable{
 	}
 
 	
-	public Kisi getKisi() {
-		return kisi;
+	public Kullanici getKullanici() {
+		return kullanici;
 	}
 	
-	public void setKisi(Kisi kisi) {
-		this.kisi = kisi;
+	public void setKullanici(Kullanici kullanici) {
+		this.kullanici = kullanici;
 	}
 	
-	public LazyDataModel<Kisi> getLazyModel() {
+	public LazyDataModel<Kullanici> getLazyModel() {
 		return lazyModel;
 	}
 	
