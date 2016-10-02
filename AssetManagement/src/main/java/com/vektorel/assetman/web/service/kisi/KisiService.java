@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 
 import com.vektorel.assetman.web.entity.Kisi;
@@ -54,6 +54,10 @@ public class KisiService implements IDataService<Kisi>{
 	public PagingResult getAllByPaging(int first, int pageSize, SortOrder sortOrder, Map<String, Object> filters) {		
 		Session session = baseDao.getSession();
 		Criteria criteria = session.createCriteria(Kisi.class);
+		
+		if(filters.get("ad")!=null){
+			criteria.add(Restrictions.ilike("ad",filters.get("ad").toString(),  MatchMode.ANYWHERE));
+		}
 		
 		int totalResult = Integer.parseInt(criteria.setProjection(Projections.rowCount()).uniqueResult().toString());
 		

@@ -9,14 +9,19 @@
 
 	<h:form id="frm">
 		<p:dataTable id="tblKisi" var="k" value="#{kisiView.lazyModel}" lazy="true" rows="10"
-			paginator="true"
-			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			paginator="true" rowKey="#{k.id}"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			currentPageReportTemplate="Toplam Kayıt Sayısı {totalRecords} "
 			rowsPerPageTemplate="5,10,15">
+			<f:facet name="header">
+				Tanımlı Kişi Listesi 
+			</f:facet>
+			
 			<p:column headerText="No">
 				<h:outputText value="#{k.id}" />
 			</p:column>
 
-			<p:column headerText="Ad">
+			<p:column headerText="Ad" filterBy="#{k.ad}">
 				<h:outputText value="#{k.ad}" />
 			</p:column>
 
@@ -32,12 +37,20 @@
 				<h:outputText value="#{k.dogumTarihi}" />
 			</p:column>
 			<p:column headerText="İşlemler">
-				<p:commandButton icon="ui-icon-trash" actionListener="#{kisiView.sil(k.id)}" update=":frm:tblKisi"></p:commandButton>
+				<p:commandButton icon="ui-icon-trash" action="#{kisiView.sil(k.id)}" update=":frm:tblKisi">
+					<p:confirm header="Silme Onayı" message="Silmek İstediginizden Emin misiniz?" icon="ui-icon-alert" />
+				</p:commandButton>
 				<p:commandButton icon="ui-icon-pencil" ></p:commandButton>
+				   <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				        <p:commandButton value="Evet" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				        <p:commandButton value="İptal" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				    </p:confirmDialog>
 			</p:column>
+			<f:facet name="footer">
+				 <p:commandButton value="Yeni" type="button" onclick="PF('dlg2').show();" />
+			</f:facet>
 		</p:dataTable>
-		<p:commandButton value="Yeni" type="button"
-			onclick="PF('dlg2').show();" />
+		
 
 		<p:dialog header="Kişi Bilgileri" draggable="false" resizable="false"
 			id="dlg2" widgetVar="dlg2" modal="true" >

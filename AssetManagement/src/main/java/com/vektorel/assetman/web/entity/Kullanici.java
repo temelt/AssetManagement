@@ -17,9 +17,10 @@ public class Kullanici extends BaseEntity{
 	 * 
 	 */
 	private static final long serialVersionUID = -9141283999805149784L;
-	Long id;
-	String username;
-	String password;
+	private Long id;
+	private String username;
+	private String password;
+	private Kisi kisi;
 	
 	@Id
 	public Long getId() {
@@ -39,6 +40,13 @@ public class Kullanici extends BaseEntity{
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public Kisi getKisi() {
+		return kisi;
+	}
+	public void setKisi(Kisi kisi) {
+		this.kisi = kisi;
 	}
 	
 	
