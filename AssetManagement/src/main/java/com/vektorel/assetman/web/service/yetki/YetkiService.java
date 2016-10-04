@@ -7,7 +7,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
@@ -65,5 +64,14 @@ public class YetkiService implements IDataService<Yetki> {
 		criteria.setFirstResult(first);
 		criteria.addOrder(Order.desc("id"));
 		return new PagingResult(criteria.list(), totalResult);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Yetki> acompYetki(String term) {
+		Session session = baseDao.getSession();
+		Criteria criteria = session.createCriteria(Yetki.class);		
+		criteria.add(Restrictions.or(Restrictions.ilike("adi",term,MatchMode.ANYWHERE)));		
+		criteria.addOrder(Order.asc("adi"));
+		return criteria.list();
 	}
 }

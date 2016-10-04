@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/layout/template.xhtml">
+	<ui:define name="pageContent">
+		<h:head>
+			<title>Asset Management System</title>
+		</h:head>		
+			<h:form id="frm">
+				<p:dataTable id="tblRolYetki" var="rolYetki" value="#{rolYetkiView.lazyDataModel}"
+					rows="10" paginator="true" lazy="true"  rowKey="#{rolYetki.id}"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15">
+			        <f:facet name="header">
+			            <p:outputPanel>
+			            <p:commandButton value="Yeni" type="button" onclick="PF('dlg').show();" style="float:left" />
+			                <h:outputText value="Rol Yetki Listesi" />
+			            </p:outputPanel>
+			        </f:facet>
+					<p:column headerText="No">
+						<h:outputText value="#{rolYetki.id}" />
+					</p:column>
+		
+					<p:column headerText="Ad">
+						<h:outputText value="#{rolYetki.yetki.adi}" />
+					</p:column>
+		
+					<p:column headerText="Rol Kod">
+						<h:outputText value="#{rolYetki.rol.kod}" />
+					</p:column>
+					
+					<p:column headerText="Rol Tanım">
+						<h:outputText value="#{rolYetki.rol.tanim}" />
+					</p:column>
+		
+		
+					<p:column headerText="İşlemler">
+						<p:commandButton actionListener="#{rolYetkiView.getById(rolYetki.id)}" oncomplete="PF('dlg').show();"
+							icon="ui-icon-pencil" />
+						<p:commandButton icon="ui-icon-trash" actionListener="#{rolYetkiView.sil(rolYetki.id)}"  update=":frm:tblRolYetki">
+							<p:confirm header="Onay Ekranı"
+								message="Silmek istediğinize emin misiniz?" icon="ui-icon-alert" />
+						</p:commandButton>
+						<p:growl id="message" showDetail="true" />
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Evet" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="Hayır" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</p:confirmDialog>
+					</p:column>
+				</p:dataTable>
+					
+				<p:dialog header="Rol Yetki Bilgileri" draggable="false" resizable="false"
+					id="dlg" widgetVar="dlg" modal="true">
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Yetki Adı:" />
+	    				<p:autoComplete id="acompYetki" value="#{rolYetkiView.rolYetki.yetki}" completeMethod="#{rolYetkiView.acompYetki}"
+			                        var="yetki" itemLabel="#{yetki.adi}" itemValue="#{yetki}" converter="yetkiConverter" forceSelection="true">
+			     		 </p:autoComplete>
+						<p:outputLabel value="Rol Kodu:" />
+	    				<p:autoComplete id="acompRol" value="#{rolYetkiView.rolYetki.rol}" completeMethod="#{rolYetkiView.acompRol}"
+			                        var="rol" itemLabel="#{rol.kod}" itemValue="#{rol}" converter="rolConverter" forceSelection="true">
+			     		 </p:autoComplete>
+						
+					</p:panelGrid>
+					<p:commandButton value="Kaydet" actionListener="#{rolYetkiView.kaydet}"
+						update=" :frm:tblRolYetki,:frm:dlg " oncomplete="PF('dlg').hide();"></p:commandButton>
+				</p:dialog>
+				
+			</h:form>
+	</ui:define>
+</ui:composition>

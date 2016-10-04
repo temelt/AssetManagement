@@ -12,6 +12,7 @@ import javax.faces.bean.ViewScoped;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import com.vektorel.assetman.web.entity.RolYetki;
 import com.vektorel.assetman.web.entity.Yetki;
 import com.vektorel.assetman.web.service.yetki.YetkiService;
 import com.vektorel.assetman.web.utilities.PagingResult;
@@ -64,6 +65,15 @@ public class YetkiView implements Serializable {
 				this.setRowCount(result.getRowCount());
 				return result.getList();
 			}
+			 @Override
+			    public Yetki getRowData(String rowKey) {
+			        for(Yetki y : lazyModel) {
+			            if(y.getId().equals(rowKey))
+			                return y;
+			        }
+			 
+			        return null;
+			    }
 		};
 
 	}

@@ -6,7 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -54,7 +56,9 @@ public class RolYetki extends BaseEntity{
 	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
-	@Column(name="yetki_id")
+	
+	@ManyToOne
+	@JoinColumn(name="yetki_id")
 	public Yetki getYetki() {
 		return yetki;
 	}

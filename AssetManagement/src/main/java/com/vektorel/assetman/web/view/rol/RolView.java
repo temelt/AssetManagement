@@ -14,6 +14,7 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import com.vektorel.assetman.web.entity.Rol;
+import com.vektorel.assetman.web.entity.Yetki;
 import com.vektorel.assetman.web.service.rol.RolService;
 import com.vektorel.assetman.web.utilities.PagingResult;
 
@@ -72,6 +73,15 @@ public class RolView implements Serializable {
 				this.setRowCount(result.getRowCount());
 				return result.getList();
 			}
+			 @Override
+			    public Rol getRowData(String rowKey) {
+			        for(Rol r : lazyModel) {
+			            if(r.getId().equals(rowKey))
+			                return r;
+			        }
+			 
+			        return null;
+			    }
 		};
 
 	}

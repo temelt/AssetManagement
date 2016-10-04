@@ -1,10 +1,21 @@
 package com.vektorel.assetman.web.service.yetki;
 
 import java.util.List;
+import java.util.Map;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.SortOrder;
 
 import com.vektorel.assetman.web.entity.RolYetki;
+import com.vektorel.assetman.web.entity.Yetki;
 import com.vektorel.assetman.web.service.BaseDao;
 import com.vektorel.assetman.web.utilities.IDataService;
+import com.vektorel.assetman.web.utilities.PagingResult;
 
 public class RolYetkiService implements IDataService<RolYetki> {
 	BaseDao baseDao = new BaseDao();
@@ -36,5 +47,24 @@ public class RolYetkiService implements IDataService<RolYetki> {
 
 	public void delete(Long id) {
 		delete(getById(id));
+	}
+
+
+	public PagingResult getAllByPaging(int first, int pageSize,
+			SortOrder sortOrder, Map<String, Object> filters) {
+		Session session = baseDao.getSession();
+		Criteria criteria = session.createCriteria(RolYetki.class);
+
+		if (filters.get("adi") != null) {
+			criteria.add(Restrictions.ilike("adi", filters.get("adi").toString(), MatchMode.ANYWHERE));
+		}
+
+		int totalResult = Integer.parseInt(criteria.setProjection(Projections.rowCount()).uniqueResult().toString());
+
+		criteria.setProjection(null);
+		criteria.setMaxResults(pageSize);
+		criteria.setFirstResult(first);
+		criteria.addOrder(Order.desc("id"));
+		return new PagingResult(criteria.list(), totalResult);
 	}
 }

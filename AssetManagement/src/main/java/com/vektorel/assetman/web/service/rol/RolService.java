@@ -12,6 +12,7 @@ import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 
 import com.vektorel.assetman.web.entity.Rol;
+import com.vektorel.assetman.web.entity.Yetki;
 import com.vektorel.assetman.web.service.BaseDao;
 import com.vektorel.assetman.web.utilities.IDataService;
 import com.vektorel.assetman.web.utilities.PagingResult;
@@ -65,6 +66,15 @@ public class RolService implements IDataService<Rol> {
 		criteria.setFirstResult(first);
 		criteria.addOrder(Order.desc("id"));
 		return new PagingResult(criteria.list(), totalResult);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Rol> acompRol(String term) {
+		Session session = baseDao.getSession();
+		Criteria criteria = session.createCriteria(Rol.class);		
+		criteria.add(Restrictions.or(Restrictions.ilike("kod",term,MatchMode.ANYWHERE)));		
+		criteria.addOrder(Order.asc("kod"));
+		return criteria.list();
 	}
 
 }
