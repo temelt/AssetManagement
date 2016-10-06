@@ -16,22 +16,23 @@ import com.vektorel.assetman.web.entity.Yetki;
 import com.vektorel.assetman.web.service.BaseDao;
 import com.vektorel.assetman.web.utilities.IDataService;
 import com.vektorel.assetman.web.utilities.PagingResult;
+import com.vektorel.assetman.web.utilities.ex.DbException;
 
 public class RolService implements IDataService<Rol> {
 	BaseDao baseDao = new BaseDao();
 
 	@Override
-	public Rol save(Rol entity) {
+	public Rol save(Rol entity) throws DbException {
 		return (Rol) baseDao.save(entity);
 	}
 
 	@Override
-	public Rol update(Rol entity) {
+	public Rol update(Rol entity) throws DbException {
 		return (Rol) baseDao.update(entity);
 	}
 
 	@Override
-	public boolean delete(Rol entity) {
+	public boolean delete(Rol entity) throws DbException {
 		baseDao.delete(entity);
 		return true;
 	}
@@ -46,7 +47,7 @@ public class RolService implements IDataService<Rol> {
 		return (Rol) baseDao.getById(entityId, Rol.class);
 	}
 
-	public void delete(Long id) {
+	public void delete(Long id)  throws DbException  {
 		delete(getById(id));
 	}
 

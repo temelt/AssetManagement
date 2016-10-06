@@ -5,8 +5,12 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/layout/template.xhtml">
 	<ui:define name="pageContent">
-		<h:form id="frm">
-		
+		<p:tooltip />         
+			<h:form>
+			    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" /> 
+			</h:form>	 
+		<p:separator />
+		<h:form id="frm">		
 			<p:dataTable id="tblYetki" var="yetki" value="#{yetkiView.lazyModel}" lazy="true" dataLocale="tr"
 				rows="10" paginator="true"
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

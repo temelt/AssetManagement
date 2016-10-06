@@ -15,22 +15,23 @@ import com.vektorel.assetman.web.entity.Yetki;
 import com.vektorel.assetman.web.service.BaseDao;
 import com.vektorel.assetman.web.utilities.IDataService;
 import com.vektorel.assetman.web.utilities.PagingResult;
+import com.vektorel.assetman.web.utilities.ex.DbException;
 
 public class YetkiService implements IDataService<Yetki> {
 	BaseDao baseDao = new BaseDao();
 
 	@Override
-	public Yetki save(Yetki entity) {
+	public Yetki save(Yetki entity) throws DbException{
 		return (Yetki) baseDao.save(entity);
 	}
 
 	@Override
-	public Yetki update(Yetki entity) {
+	public Yetki update(Yetki entity) throws DbException {
 		return (Yetki) baseDao.update(entity);
 	}
 
 	@Override
-	public boolean delete(Yetki entity) {
+	public boolean delete(Yetki entity) throws DbException{
 		return baseDao.delete(entity);
 	}
 
@@ -44,7 +45,7 @@ public class YetkiService implements IDataService<Yetki> {
 		return (Yetki) baseDao.getById(entityId, Yetki.class);
 	}
 
-	public void delete(Long id) {
+	public void delete(Long id) throws DbException{
 		delete(getById(id));
 	}
 

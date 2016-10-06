@@ -5,6 +5,11 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/layout/template.xhtml">
 	<ui:define name="pageContent">
+		<p:tooltip />         
+			<h:form>
+			    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" /> 
+			</h:form>	 
+		<p:separator />
 		<h:form id="frm">
 			<p:dataTable id="tblRol" var="rol" value="#{rolView.lazyModel}" lazy="true"
 				rows="10" paginator="true"

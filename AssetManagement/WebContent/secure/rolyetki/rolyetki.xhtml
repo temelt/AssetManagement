@@ -8,6 +8,13 @@
 		<h:head>
 			<title>Asset Management System</title>
 		</h:head>		
+		<p:tooltip />
+         
+<h:form>
+    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" /> 
+</h:form>
+ 
+<p:separator />
 			<h:form id="frm">
 				<p:dataTable id="tblRolYetki" var="rolYetki" value="#{rolYetkiView.lazyDataModel}"
 					rows="10" paginator="true" lazy="true"  rowKey="#{rolYetki.id}"
@@ -37,7 +44,7 @@
 		
 		
 					<p:column headerText="İşlemler">
-						<p:commandButton actionListener="#{rolYetkiView.getById(rolYetki.id)}" oncomplete="PF('dlg').show();"
+						<p:commandButton actionListener="#{rolYetkiView.getById(rolYetki.id)}" update=":frm:dlg" oncomplete="PF('dlg').show();"
 							icon="ui-icon-pencil" />
 						<p:commandButton icon="ui-icon-trash" actionListener="#{rolYetkiView.sil(rolYetki.id)}"  update=":frm:tblRolYetki">
 							<p:confirm header="Onay Ekranı"

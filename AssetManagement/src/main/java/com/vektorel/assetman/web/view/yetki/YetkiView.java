@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -16,6 +18,7 @@ import com.vektorel.assetman.web.entity.RolYetki;
 import com.vektorel.assetman.web.entity.Yetki;
 import com.vektorel.assetman.web.service.yetki.YetkiService;
 import com.vektorel.assetman.web.utilities.PagingResult;
+import com.vektorel.assetman.web.utilities.ex.DbException;
 
 @ManagedBean(name = "yetkiView")
 @ViewScoped
@@ -36,23 +39,40 @@ public class YetkiView implements Serializable {
 	}
 
 	public void kaydet() {
-		if (yetki.getId() == null) {
-			yetki.setEklemeTarihi(new Date());
-			yetkiService.save(yetki);
-		}else{
-			yetki.setGuncellemeTarihi(new Date());
-			yetkiService.update(yetki);
+		try {
+			if (yetki.getId() == null) {
+				yetki.setEklemeTarihi(new Date());
+				yetkiService.save(yetki);
+				yetki = new Yetki();
+				listele();
+		        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Bilgilendirme", "Baþarýyla Kaydedildi."));
+			}else{
+				yetki.setGuncellemeTarihi(new Date());
+				yetkiService.update(yetki);
+				yetki = new Yetki();
+				listele();
+		        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Bilgilendirme", "Baþarýyla Güncellendi."));
+			}
+		} catch (DbException e) {
+			FacesContext context = FacesContext.getCurrentInstance();
+	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Hata Oluþtu",  e.getMessage()) );
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		yetki = new Yetki();
-		listele();
-
 	}
 
 	public void sil(Long rolId) {
-		System.out.println("Silme Ýþlemi");
-		yetkiService.delete(rolId);
-		yetki = new Yetki();
-		listele();
+		try {
+			yetkiService.delete(rolId);
+			yetki = new Yetki();
+			listele();
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Bilgilendirme", "Baþarýyla Silindi."));
+		}catch (DbException e) {
+			FacesContext context = FacesContext.getCurrentInstance();
+	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Hata Oluþtu",  e.getMessage()) );
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void listele() {

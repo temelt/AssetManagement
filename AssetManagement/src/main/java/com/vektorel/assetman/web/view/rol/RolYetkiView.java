@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -14,11 +16,11 @@ import org.primefaces.model.SortOrder;
 import com.vektorel.assetman.web.entity.Rol;
 import com.vektorel.assetman.web.entity.RolYetki;
 import com.vektorel.assetman.web.entity.Yetki;
-import com.vektorel.assetman.web.service.BaseDao;
 import com.vektorel.assetman.web.service.rol.RolService;
 import com.vektorel.assetman.web.service.yetki.RolYetkiService;
 import com.vektorel.assetman.web.service.yetki.YetkiService;
 import com.vektorel.assetman.web.utilities.PagingResult;
+import com.vektorel.assetman.web.utilities.ex.DbException;
 
 @ManagedBean(name = "rolYetkiView")
 @ViewScoped
@@ -65,11 +67,46 @@ public class RolYetkiView implements Serializable {
 
 	}
 	public void kaydet() {
-		if(rolYetki.getRol().getKod()!=null){
-		rolYetkiService.save(rolYetki);
+		try {
+			if(rolYetki.getRol().getKod()!=null){
+				if (rolYetki.getId()==null) {
+					rolYetkiService.save(rolYetki);
+					rolYetki = new RolYetki();
+					listele();
+			        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Bilgilendirme", "Baþarýyla Kaydedildi."));
+					
+				} else {
+					rolYetkiService.update(rolYetki);
+					rolYetki = new RolYetki();
+					listele();
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Bilgilendirme", "Baþarýyla Güncellendi."));	
+					}
+			}
+		} catch (DbException d) {		
+			   FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hata", "Hata Oluþtu . " + d.getMessage()));
+		}catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hata", "Hata Oluþtu."));
+		}
+		
+	}
+	public void sil(Long rolId) {
+		try {
+			rolYetkiService.delete(rolId);
+			rolYetki=new RolYetki();
+			listele();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Bilgilendirme", "Baþarýyla Silindi."));
+
+		} catch (DbException d) {
+			   FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hata", "Hata Oluþtu . " + d.getMessage()));
+
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hata", "Hata Oluþtu."));
 
 		}
 	}
+	public void getById(Long rolId) {
+		rolYetki=rolYetkiService.getById(rolId);
+		}
 	public List<Yetki> acompYetki(String term) {		
 		return yetkiService.acompYetki(term);
 	}

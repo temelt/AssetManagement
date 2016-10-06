@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -14,9 +15,9 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import com.vektorel.assetman.web.entity.Rol;
-import com.vektorel.assetman.web.entity.Yetki;
 import com.vektorel.assetman.web.service.rol.RolService;
 import com.vektorel.assetman.web.utilities.PagingResult;
+import com.vektorel.assetman.web.utilities.ex.DbException;
 
 @ManagedBean(name = "rolView")
 @ViewScoped
@@ -38,14 +39,24 @@ public class RolView implements Serializable {
 	}
 
 	public void kaydet() {
-		if (rol.getId() == null) {
-			rol.setEklemeTarihi(new Date());
-			rolService.save(rol);
-		} else {
-			rol.setGuncellemeTarihi(new Date());
-			rolService.update(rol);
-		}
-		rol = new Rol();
+		try {
+				if (rol.getId() == null) {
+					rol.setEklemeTarihi(new Date());
+					rolService.save(rol);
+					rol = new Rol();
+			        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Bilgilendirme", "Baþarýyla Kaydedildi."));
+				} else {
+					rol.setGuncellemeTarihi(new Date());
+					rolService.update(rol);
+					rol = new Rol();
+			        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Bilgilendirme", "Baþarýyla Güncellendi."));
+				}		
+			} catch (DbException d) {		
+				   FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hata", "Hata Oluþtu . " + d.getMessage()));
+			}catch (Exception e) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hata", "Hata Oluþtu."));
+			}
+			
 		listele();
 	}
 
@@ -87,9 +98,16 @@ public class RolView implements Serializable {
 	}
 
 	public void sil(Long rolId) {
-		rolService.delete(rolId);
-		rol = new Rol();
-		listele();
+		try {
+			rolService.delete(rolId);
+			rol = new Rol();
+			listele();
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Bilgilendirme", "Baþarýyla Silindi."));
+		}catch (DbException d) {		
+			   FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hata", "Hata Oluþtu . " + d.getMessage()));
+		}catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hata", "Hata Oluþtu."));
+		}
 	}
 
 	public Rol getRol() {
