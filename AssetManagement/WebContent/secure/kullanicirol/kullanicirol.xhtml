@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/layout/template.xhtml">
+	<ui:define name="pageContent">
+		<h:head>
+			<title>Asset Management System</title>
+		</h:head>		
+		<p:tooltip />
+         
+<h:form>
+    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" /> 
+</h:form>
+ 
+<p:separator />
+			<h:form id="frm">
+				<p:dataTable id="tblKullaniciRol" var="kullaniciRol" value="#{kullaniciRolView.lazyDataModel}"
+					rows="10" paginator="true" lazy="true"  rowKey="#{kullaniciRol.id}"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15">
+			        <f:facet name="header">
+			            <p:outputPanel>
+			            <p:commandButton value="Yeni" type="button" onclick="PF('dlg').show();" style="float:left" />
+			                <h:outputText value="Rol Kullanici Listesi" />
+			            </p:outputPanel>
+			        </f:facet>
+					<p:column headerText="No">
+						<h:outputText value="#{kullaniciRol.id}" />
+					</p:column>
+		
+					<p:column headerText="Ad">
+						<h:outputText value="#{kullaniciRol.kullanici.username}" />
+					</p:column>
+		
+					<p:column headerText="İşlemler">
+						<p:commandButton actionListener="#{kullaniciRolView.getById(kullaniciRol.id)}" update=":frm:dlg" oncomplete="PF('dlg').show();"
+							icon="ui-icon-pencil" />
+						<p:commandButton icon="ui-icon-trash" actionListener="#{kullaniciRolView.sil(kullaniciRol.id)}"  update=":frm:tblKullaniciRol">
+							<p:confirm header="Onay Ekranı"
+								message="Silmek istediğinize emin misiniz?" icon="ui-icon-alert" />
+						</p:commandButton>
+						<p:growl id="message" showDetail="true" />
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Evet" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="Hayır" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</p:confirmDialog>
+					</p:column>
+				</p:dataTable>
+					
+				<p:dialog header="Kullanıcı Rol  Bilgileri" draggable="false" resizable="false"
+					id="dlg" widgetVar="dlg" modal="true">
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Kullanıcı Adı:" />
+	    				<p:autoComplete id="acompKullanici" value="#{kullaniciRolView.kullaniciRol.kullanici}" completeMethod="#{kullaniciRolView.acompKullanici}"
+			                        var="kullanici" itemLabel="#{kullanici.username}" itemValue="#{kullanici}" converter="kullaniciConverter" forceSelection="true">
+			     		 </p:autoComplete>
+						<p:outputLabel value="Rol Kodu:" />
+	    				<p:autoComplete id="acompRol" value="#{kullaniciRolView.kullaniciRol.rol}" completeMethod="#{kullaniciRolView.acompRol}"
+			                        var="rol" itemLabel="#{rol.kod}" itemValue="#{rol}" converter="rolConverter" forceSelection="true">
+			     		 </p:autoComplete>
+						
+					</p:panelGrid>
+					<p:commandButton value="Kaydet" actionListener="#{kullaniciRolView.kaydet}"
+						update=" :frm:tblKullaniciRol,:frm:dlg " oncomplete="PF('dlg').hide();"></p:commandButton>
+				</p:dialog>
+				
+			</h:form>
+	</ui:define>
+</ui:composition>

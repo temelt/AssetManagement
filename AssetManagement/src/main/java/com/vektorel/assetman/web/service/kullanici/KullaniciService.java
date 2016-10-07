@@ -1,5 +1,6 @@
 package com.vektorel.assetman.web.service.kullanici;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 
 import com.vektorel.assetman.web.entity.Kullanici;
+import com.vektorel.assetman.web.entity.Rol;
 import com.vektorel.assetman.web.service.BaseDao;
 import com.vektorel.assetman.web.utilities.IDataService;
 import com.vektorel.assetman.web.utilities.PagingResult;
@@ -19,6 +21,10 @@ import com.vektorel.assetman.web.utilities.ex.DbException;
 
 public class KullaniciService implements IDataService<Kullanici> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1613837182854052645L;
 	BaseDao baseDao = new BaseDao();
 
 	@Override
@@ -73,6 +79,15 @@ public class KullaniciService implements IDataService<Kullanici> {
 		criteria.setFirstResult(first);
 		criteria.addOrder(Order.desc("id"));
 		return new PagingResult(criteria.list(), totalResult);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Kullanici> acompKullanici(String term) {
+		Session session = baseDao.getSession();
+		Criteria criteria = session.createCriteria(Kullanici.class);		
+		criteria.add(Restrictions.or(Restrictions.ilike("username",term,MatchMode.ANYWHERE)));		
+		criteria.addOrder(Order.asc("username"));
+		return criteria.list();
 	}
 
 }
