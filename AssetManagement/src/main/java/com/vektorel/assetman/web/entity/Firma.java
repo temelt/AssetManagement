@@ -34,8 +34,8 @@ public class Firma extends BaseEntity {
 	Adres adres;
 	
 	@Id
-	@SequenceGenerator(sequenceName="seq_gnl_firma_id",name="seq_gnl_firma_id",allocationSize=1,initialValue=1)
-	@GeneratedValue(generator="seq_gnl_firma_id",strategy=GenerationType.SEQUENCE)
+	@SequenceGenerator(sequenceName="seq_gnl_firma",name="seq_gnl_firma",allocationSize=1,initialValue=1)
+	@GeneratedValue(generator="seq_gnl_firma",strategy=GenerationType.SEQUENCE)
 	public Long getId() {
 		return id;
 	}

@@ -42,8 +42,8 @@ public class Rol extends BaseEntity {
 	}
 
 	@Id
-	@SequenceGenerator(sequenceName = "seq_gnl_rol_id", name = "seq_gnl_rol_id", allocationSize = 1, initialValue = 1)
-	@GeneratedValue(generator = "seq_gnl_rol_id", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(sequenceName = "seq_gnl_rol", name = "seq_gnl_rol", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(generator = "seq_gnl_rol", strategy = GenerationType.SEQUENCE)
 	public Long getId() {
 		return id;
 	}

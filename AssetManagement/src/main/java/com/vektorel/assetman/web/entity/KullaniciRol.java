@@ -17,7 +17,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "gnl_kullanici_rol")
+@Table(name = "yet_kullanici_rol")
 public class KullaniciRol extends BaseEntity {
 
 	Long id;
@@ -36,8 +36,8 @@ public class KullaniciRol extends BaseEntity {
 	}
 
 	@Id
-	@SequenceGenerator(sequenceName="seq_gnl_kullanici_rol_id",name="seq_gnl_kullanici_rol_id",allocationSize=1,initialValue=1)
-	@GeneratedValue(generator="seq_gnl_kullanici_rol_id",strategy=GenerationType.SEQUENCE)
+	@SequenceGenerator(sequenceName="seq_gnl_kullanici_rol",name="seq_gnl_kullanici_rol",allocationSize=1,initialValue=1)
+	@GeneratedValue(generator="seq_gnl_kullanici_rol",strategy=GenerationType.SEQUENCE)
 	public Long getId() {
 		return id;
 	}

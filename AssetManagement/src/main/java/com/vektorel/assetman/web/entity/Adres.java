@@ -3,6 +3,8 @@ package com.vektorel.assetman.web.entity;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Embeddable
 public class Adres implements Serializable{
@@ -11,6 +13,7 @@ public class Adres implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -4557554633029220551L;
+	
 	String acikAdres;
 	String email;
 	String tel;
@@ -41,6 +44,8 @@ public class Adres implements Serializable{
 		this.tel = tel;
 	}
 
+	@JoinColumn(name="il_id")
+	@ManyToOne(optional=true)
 	public Yerlesim getIl() {
 		return il;
 	}
@@ -49,6 +54,8 @@ public class Adres implements Serializable{
 		this.il = il;
 	}
 
+	@JoinColumn(name="ilce_id")
+	@ManyToOne(optional=true)
 	public Yerlesim getIlce() {
 		return ilce;
 	}

@@ -1,14 +1,11 @@
 package com.vektorel.assetman.web.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -38,8 +35,8 @@ public class RolYetki extends BaseEntity{
 	}
 
 	@Id
-	@SequenceGenerator(sequenceName="seq_gnl_rol_yetki_id",name="seq_gnl_rol_yetki_id",allocationSize=1,initialValue=1)
-	@GeneratedValue(generator="seq_gnl_rol_yetki_id",strategy=GenerationType.SEQUENCE)
+	@SequenceGenerator(sequenceName="seq_gnl_rol_yetki",name="seq_gnl_rol_yetki",allocationSize=1,initialValue=1)
+	@GeneratedValue(generator="seq_gnl_rol_yetki",strategy=GenerationType.SEQUENCE)
 	public Long getId() {
 		return id;
 	}

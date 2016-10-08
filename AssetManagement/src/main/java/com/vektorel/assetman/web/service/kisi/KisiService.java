@@ -10,6 +10,9 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.vektorel.assetman.web.entity.Kisi;
 import com.vektorel.assetman.web.service.BaseDao;
@@ -17,10 +20,16 @@ import com.vektorel.assetman.web.utilities.IDataService;
 import com.vektorel.assetman.web.utilities.PagingResult;
 import com.vektorel.assetman.web.utilities.ex.DbException;
 
+@Service("kisiService")
 public class KisiService implements IDataService<Kisi>{
 
-	BaseDao baseDao=new BaseDao();
 	
+	@Autowired
+	private transient BaseDao baseDao;
+	public KisiService() {
+		super();
+		System.out.println("KisiService Oluþturuldu.");
+	}
 	
 	@Override
 	public Kisi save(Kisi entity) throws DbException {
@@ -55,6 +64,7 @@ public class KisiService implements IDataService<Kisi>{
 		delete(getById(id));		
 	}
 
+	@Transactional
 	public PagingResult getAllByPaging(int first, int pageSize, SortOrder sortOrder, Map<String, Object> filters) {		
 		Session session = baseDao.getSession();
 		Criteria criteria = session.createCriteria(Kisi.class);

@@ -5,9 +5,7 @@ package com.vektorel.assetman.web.entity;
  * @author recep
  *
  */
-public class EkipmanTip extends BaseEntity{
+public enum EkipmanTip {
 
-	Long id;
-	String tanim;
-	String kod;
+	SAGLAM,HURDA,ARIZALI,STOK
 }

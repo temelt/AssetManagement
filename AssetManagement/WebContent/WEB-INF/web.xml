@@ -12,6 +12,17 @@
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	<context-param>
+         <param-name>contextConfigLocation</param-name>
+         <param-value>
+			/WEB-INF/app.xml
+         </param-value>
+   </context-param>
+      <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+      </listener>
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>/faces/*</url-pattern>

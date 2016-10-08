@@ -6,20 +6,23 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import com.vektorel.assetman.web.entity.Kisi;
 import com.vektorel.assetman.web.service.kisi.KisiService;
 import com.vektorel.assetman.web.utilities.PagingResult;
 
-
-@ManagedBean(name="kisiView")
-@ViewScoped
+//@ManagedBean
+//@ViewScoped
+//@Component
+@Controller("kisiView")
+@Scope("view")
 public class KisiView implements Serializable{
 
 	/**
@@ -27,15 +30,21 @@ public class KisiView implements Serializable{
 	 */
 	private static final long serialVersionUID = -6657286050378044309L;
 	
-	KisiService kisiService=null;
+	@Autowired
+	private transient KisiService kisiService;
+	
 	Kisi kisi;
 	LazyDataModel<Kisi> lazyModel;
+	
+	public KisiView() {
+		super();
+		System.out.println("KisiView Oluþturuldu.");
+	}
 	
 	@PostConstruct
 	private void init() {
 		
 		kisi=new Kisi();
-		kisiService=new KisiService();
 		listele();
 	}
 	

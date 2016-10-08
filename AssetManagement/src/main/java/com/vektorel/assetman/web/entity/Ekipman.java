@@ -3,11 +3,24 @@ package com.vektorel.assetman.web.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 /**
  * 
  * @author recep
  *
  */
+@Entity
+ @Table(name="STK_EKIPMAN")
 public class Ekipman extends BaseEntity {
 
 	/**
@@ -26,7 +39,11 @@ public class Ekipman extends BaseEntity {
 	private BigDecimal maliyet;
 	private Personel personel;
 	private Date kurulumTarihi;
+	private EkipmanTip ekipmanTip;
 
+	@Id
+	@SequenceGenerator(allocationSize=1,name="seq_ekipman",sequenceName="seq_ekipman")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="seq_ekipman")
 	public Long getId() {
 		return id;
 	}
@@ -67,6 +84,8 @@ public class Ekipman extends BaseEntity {
 		this.stokKart = stokKart;
 	}
 
+	@JoinColumn(name="lokasyon_id")
+	@ManyToOne(optional=true)
 	public Lokasyon getLokasyon() {
 		return lokasyon;
 	}
@@ -75,6 +94,8 @@ public class Ekipman extends BaseEntity {
 		this.lokasyon = lokasyon;
 	}
 
+	@JoinColumn(name="yerlesim_id")
+	@ManyToOne(optional=true)
 	public Yerlesim getYerlesim() {
 		return yerlesim;
 	}
@@ -99,6 +120,8 @@ public class Ekipman extends BaseEntity {
 		this.maliyet = maliyet;
 	}
 
+	@JoinColumn(name="personel_id")
+	@ManyToOne(optional=true)
 	public Personel getPersonel() {
 		return personel;
 	}
@@ -115,4 +138,11 @@ public class Ekipman extends BaseEntity {
 		this.kurulumTarihi = kurulumTarihi;
 	}
 
+	@Enumerated(EnumType.ORDINAL)
+	public EkipmanTip getEkipmanTip() {
+		return ekipmanTip;
+	}
+	public void setEkipmanTip(EkipmanTip ekipmanTip) {
+		this.ekipmanTip = ekipmanTip;
+	}
 }
