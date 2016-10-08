@@ -11,6 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author eda
+ *
+ */
 @Entity
 @Table(name="gnl_yerlesim")
 public class Yerlesim extends BaseEntity{
