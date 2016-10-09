@@ -13,6 +13,9 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import com.vektorel.assetman.web.entity.RolYetki;
 import com.vektorel.assetman.web.entity.Yetki;
@@ -20,8 +23,9 @@ import com.vektorel.assetman.web.service.yetki.YetkiService;
 import com.vektorel.assetman.web.utilities.PagingResult;
 import com.vektorel.assetman.web.utilities.ex.DbException;
 
-@ManagedBean(name = "yetkiView")
-@ViewScoped
+
+@Controller("yetkiView")
+@Scope("view")
 public class YetkiView implements Serializable {
 	/**
 	 * 
@@ -29,11 +33,13 @@ public class YetkiView implements Serializable {
 	private static final long serialVersionUID = 1L;
 	LazyDataModel<Yetki> lazyModel;
 	Yetki yetki = null;
-	YetkiService yetkiService = null;
+	
+	@Autowired
+	private transient YetkiService yetkiService ;
 
 	@PostConstruct
 	private void init() {
-		yetkiService = new YetkiService();
+
 		yetki = new Yetki();
 		listele();
 	}

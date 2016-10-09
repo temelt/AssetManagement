@@ -13,14 +13,17 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import com.vektorel.assetman.web.entity.Rol;
 import com.vektorel.assetman.web.service.rol.RolService;
 import com.vektorel.assetman.web.utilities.PagingResult;
 import com.vektorel.assetman.web.utilities.ex.DbException;
 
-@ManagedBean(name = "rolView")
-@ViewScoped
+@Controller("rolView")
+@Scope("view")
 public class RolView implements Serializable {
 	/**
 	 * 
@@ -28,12 +31,13 @@ public class RolView implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	LazyDataModel<Rol> lazyModel;
-	Rol rol = null;
-	RolService rolService = null;
+	Rol rol ;
+	
+	@Autowired
+	private transient RolService rolService ;
 
 	@PostConstruct
 	private void init() {
-		rolService = new RolService();
 		rol = new Rol();
 		listele();
 	}

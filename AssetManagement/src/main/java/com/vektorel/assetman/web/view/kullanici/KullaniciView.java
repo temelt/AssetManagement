@@ -12,6 +12,9 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import com.vektorel.assetman.web.entity.Kisi;
 import com.vektorel.assetman.web.entity.Kullanici;
@@ -20,8 +23,9 @@ import com.vektorel.assetman.web.service.kullanici.KullaniciService;
 import com.vektorel.assetman.web.utilities.PagingResult;
 import com.vektorel.assetman.web.utilities.ex.DbException;
 
-@ManagedBean(name="kullaniciView")
-@ViewScoped
+
+@Controller("kullaniciView")
+@Scope("view")
 public class KullaniciView implements Serializable{
 
 	/**
@@ -29,16 +33,17 @@ public class KullaniciView implements Serializable{
 	 */
 	private static final long serialVersionUID = -6657286050378044309L;
 	
-	KullaniciService kullaniciService=null;
-	KisiService kisiService =null;
+	@Autowired
+	private transient KullaniciService kullaniciService;
+	
+	@Autowired
+	private transient KisiService kisiService ;
 	Kullanici kullanici;
 	LazyDataModel<Kullanici> lazyModel;
 	
 	@PostConstruct
 	private void init() {
-		kisiService=new KisiService();
 		kullanici=new Kullanici();
-		kullaniciService=new KullaniciService();
 		listele();
 	}
 	

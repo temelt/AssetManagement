@@ -65,11 +65,11 @@
 					<p:panelGrid columns="2">
 						<p:outputLabel value="Yetki Adı:" />
 	    				<p:autoComplete id="acompYetki" value="#{rolYetkiView.rolYetki.yetki}" completeMethod="#{rolYetkiView.acompYetki}"
-			                        var="yetki" itemLabel="#{yetki.adi}" itemValue="#{yetki}" converter="yetkiConverter" forceSelection="true">
+			                        var="yetki" itemLabel="#{yetki.adi}" itemValue="#{yetki}" converter="#{yetkiConverter}" forceSelection="true">
 			     		 </p:autoComplete>
 						<p:outputLabel value="Rol Kodu:" />
 	    				<p:autoComplete id="acompRol" value="#{rolYetkiView.rolYetki.rol}" completeMethod="#{rolYetkiView.acompRol}"
-			                        var="rol" itemLabel="#{rol.kod}" itemValue="#{rol}" converter="rolConverter" forceSelection="true">
+			                        var="rol" itemLabel="#{rol.kod}" itemValue="#{rol}" converter="#{rolConverter}" forceSelection="true">
 			     		 </p:autoComplete>
 						
 					</p:panelGrid>

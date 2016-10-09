@@ -82,6 +82,7 @@ public class KisiService implements IDataService<Kisi>{
 		return new PagingResult(criteria.list(), totalResult);
 	}
 
+	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<Kisi> acompKisi(String term) {
 		Session session = baseDao.getSession();

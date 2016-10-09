@@ -59,7 +59,7 @@
 
 				<p:outputLabel value="Kullanıcı Kişisi :"  />
 		        <p:autoComplete id="acompKisi" value="#{kullaniciView.kullanici.kisi}" completeMethod="#{kullaniciView.acompKisi}"
-		                        var="kisi" itemLabel="#{kisi.adSoyad}" itemValue="#{kisi}" converter="kisiConverter" forceSelection="true">
+		                        var="kisi" itemLabel="#{kisi.adSoyad}" itemValue="#{kisi}" converter="#{kisiConverter}" forceSelection="true">
 		        </p:autoComplete>
 
 				<h:outputText value="Kullanıcı Adı :" />

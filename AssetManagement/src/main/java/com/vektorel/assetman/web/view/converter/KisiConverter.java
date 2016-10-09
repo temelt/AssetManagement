@@ -5,16 +5,21 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import com.vektorel.assetman.web.entity.Kisi;
 import com.vektorel.assetman.web.service.kisi.KisiService;
 
-@FacesConverter("kisiConverter")
+@Component("kisiConverter")
+@Scope("request")
 public class KisiConverter implements Converter{
-
+	@Autowired
+	private transient KisiService service;
 	   public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
 	        if(value != null && value.trim().length() > 0) {
 	            try {
-	            	KisiService service = new KisiService();
 	                return service.getById(Long.parseLong(value));
 	            } catch(NumberFormatException e) {
 	               e.printStackTrace();
