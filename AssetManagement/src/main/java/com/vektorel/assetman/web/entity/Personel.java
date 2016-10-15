@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -48,6 +50,8 @@ public class Personel extends BaseEntity {
 		this.sicilNo = sicilNo;
 	}
 
+	@JoinColumn(name="kisi_id")
+	@ManyToOne(optional=true)
 	public Kisi getKisi() {
 		return kisi;
 	}
@@ -56,7 +60,7 @@ public class Personel extends BaseEntity {
 		this.kisi = kisi;
 	}
 
-	@Column(name = "maas", precision = 10, scale = 12)
+	@Column(name = "maas", precision = 10, scale = 2)
 	public BigDecimal getMaas() {
 		return maas;
 	}
