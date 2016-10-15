@@ -36,7 +36,6 @@ public class FirmaView implements Serializable {
 		listele();
 	}
 
-	@SuppressWarnings("unchecked")
 	public void kaydet() {
 		try {
 			if (firma.getId() == null) {
@@ -80,6 +79,7 @@ public class FirmaView implements Serializable {
 			 * 
 			 */
 			private static final long serialVersionUID = -3966021225522410051L;
+			@SuppressWarnings("unchecked")
 			@Override
 			public List<Firma> load(int first, int pageSize, String sortField,
 					SortOrder sortOrder, Map<String, Object> filters) {

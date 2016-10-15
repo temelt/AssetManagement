@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.vektorel.assetman.web.entity.Kisi;
 import com.vektorel.assetman.web.entity.Personel;
 import com.vektorel.assetman.web.service.BaseDao;
 import com.vektorel.assetman.web.utilities.IDataService;
@@ -47,6 +46,7 @@ public class PersonelService implements IDataService<Personel> {
 		return baseDao.delete(entity);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Personel> getAll() {
 		return (List<Personel>) baseDao.getAll(Personel.class);

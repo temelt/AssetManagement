@@ -2,19 +2,17 @@ package com.vektorel.assetman.web.utilities;
 
 import java.util.List;
 
+@SuppressWarnings("rawtypes")
 public class PagingResult {
 	
 	public PagingResult() {
-		// TODO Auto-generated constructor stub
 	}
-	
 	
 	public PagingResult(List list, int rowCount) {
 		super();
 		this.list = list;
 		this.rowCount = rowCount;
 	}
-
 
 	List list;
 	int rowCount;

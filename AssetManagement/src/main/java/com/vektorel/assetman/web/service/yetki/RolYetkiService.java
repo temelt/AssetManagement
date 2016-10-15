@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vektorel.assetman.web.entity.RolYetki;
-import com.vektorel.assetman.web.entity.Yetki;
 import com.vektorel.assetman.web.service.BaseDao;
 import com.vektorel.assetman.web.utilities.IDataService;
 import com.vektorel.assetman.web.utilities.PagingResult;
@@ -42,6 +41,7 @@ public class RolYetkiService implements IDataService<RolYetki> {
 		return baseDao.delete(entity);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<RolYetki> getAll() {
 		return (List<RolYetki>) baseDao.getAll(RolYetki.class);

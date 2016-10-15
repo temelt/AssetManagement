@@ -50,6 +50,7 @@ public class KisiService implements IDataService<Kisi>{
 		return baseDao.delete(entity);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Kisi> getAll() {
 		return (List<Kisi>) baseDao.getAll(Kisi.class);

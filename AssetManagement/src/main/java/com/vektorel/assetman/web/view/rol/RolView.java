@@ -7,8 +7,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.model.LazyDataModel;
@@ -79,6 +77,7 @@ public class RolView implements Serializable {
 			 */
 			private static final long serialVersionUID = 1L;
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public List<Rol> load(int first, int pageSize, String sortField,
 					SortOrder sortOrder, Map<String, Object> filters) {

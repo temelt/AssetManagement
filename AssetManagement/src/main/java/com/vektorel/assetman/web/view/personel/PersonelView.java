@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.vektorel.assetman.web.entity.Kisi;
 import com.vektorel.assetman.web.entity.Personel;
 import com.vektorel.assetman.web.service.personel.PersonelService;
 import com.vektorel.assetman.web.utilities.PagingResult;

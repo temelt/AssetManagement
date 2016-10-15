@@ -39,14 +39,15 @@ public class BaseDao {
         return true;
     }
 
-    @Transactional
+    @SuppressWarnings("rawtypes")
+	@Transactional
     public List getAll(Class cls) {
         Criteria cr = getSession().createCriteria(cls);
         return cr.list();
     }
 
     @Transactional
-    public Object getById(Long entityId,Class cls) {
+    public Object getById(Long entityId,@SuppressWarnings("rawtypes") Class cls) {
         Criteria cr = getSession().createCriteria(cls);
         cr.add(Restrictions.eq("id", entityId));
         return cr.uniqueResult();

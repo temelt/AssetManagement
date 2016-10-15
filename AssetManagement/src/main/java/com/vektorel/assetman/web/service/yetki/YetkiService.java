@@ -42,6 +42,7 @@ public class YetkiService implements IDataService<Yetki> {
 		return baseDao.delete(entity);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Yetki> getAll() {
 		return (List<Yetki>) baseDao.getAll(Yetki.class);

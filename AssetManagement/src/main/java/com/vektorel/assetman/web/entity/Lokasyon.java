@@ -16,6 +16,10 @@ import javax.persistence.Table;
 @Table(name="gnl_lokasyon")
 public class Lokasyon extends BaseEntity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1791583890100920526L;
 	Long id;
 	String tanim;
 	String kod;

@@ -17,26 +17,19 @@ import org.springframework.stereotype.Service;
 
 import com.vektorel.assetman.web.entity.Kullanici;
 import com.vektorel.assetman.web.service.BaseDao;
-import com.vektorel.assetman.web.utilities.IDataService;
 import com.vektorel.assetman.web.utilities.PagingResult;
 import com.vektorel.assetman.web.utilities.ex.DbException;
 
 @Service("kullaniciService")
-public class KullaniciService implements IDataService<Kullanici> {
+public class KullaniciService {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1613837182854052645L;
 	@Autowired
 	private transient BaseDao baseDao;
 
-	@Override
 	public Kullanici save(Kullanici entity) throws DbException {
 		return (Kullanici) baseDao.save(entity);
 	}
 
-	@Override
 	public Kullanici update(Kullanici entity) throws DbException {
 		return (Kullanici) baseDao.update(entity);
 	}
@@ -49,18 +42,15 @@ public class KullaniciService implements IDataService<Kullanici> {
 		}
 	}
 
-	@Override
 	public boolean delete(Kullanici entity) throws DbException {
 		return baseDao.delete(entity);
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<Kullanici> getAll() {
 		return baseDao.getAll(Kullanici.class);
 	}
 
-	@Override
 	public Kullanici getById(Long entityId) {
 		return (Kullanici) baseDao.getById(entityId, Kullanici.class);
 	}

@@ -49,9 +49,9 @@ public class StokKartService implements IDataService<StokKart> {
 		return baseDao.delete(entity);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<StokKart> getAll() {
-		// TODO Auto-generated method stub
 		return (List<StokKart>) baseDao.getAll(StokKart.class);
 	}
 

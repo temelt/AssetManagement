@@ -18,6 +18,10 @@ import javax.persistence.Table;
 @Table(name="gnl_rol_yetki")
 public class RolYetki extends BaseEntity{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2830751442796539214L;
 	Long id;
 	Rol rol;
 	Yetki yetki;
@@ -25,7 +29,6 @@ public class RolYetki extends BaseEntity{
 	
 	public RolYetki() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public RolYetki(Rol rol, Yetki yetki) {

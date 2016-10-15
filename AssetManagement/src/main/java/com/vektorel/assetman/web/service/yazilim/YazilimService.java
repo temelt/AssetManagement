@@ -60,6 +60,7 @@ public class YazilimService implements IDataService<Yazilim> {
 		return new PagingResult(criteria.list(), totalResult);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Yazilim> getAll() {
 		return (List<Yazilim>) baseDao.getAll(Yazilim.class);

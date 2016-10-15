@@ -7,8 +7,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.model.LazyDataModel;
@@ -37,6 +35,7 @@ public class KullaniciRolView implements Serializable{
 	LazyDataModel<KullaniciRol> lazyDataModel;
 
 	KullaniciRol kullaniciRol;
+	@SuppressWarnings("rawtypes")
 	@Autowired
 	private transient KullaniciRolService kullaniciRolService ;
 	@Autowired
@@ -95,6 +94,7 @@ public class KullaniciRolView implements Serializable{
 			 * 
 			 */
 			private static final long serialVersionUID = -3966021225522410051L;
+			@SuppressWarnings("unchecked")
 			@Override
 			public List<KullaniciRol> load(int first, int pageSize, String sortField,
 					SortOrder sortOrder, Map<String, Object> filters) {

@@ -48,6 +48,7 @@ public class Kisi extends BaseEntity {
 	private String tc;
 	private Date dogumTarihi;
 	private Adres adres;
+	@SuppressWarnings("unused")
 	private String adSoyad;
 
 	@Id

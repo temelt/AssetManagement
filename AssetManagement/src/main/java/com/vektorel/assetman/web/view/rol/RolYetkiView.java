@@ -6,8 +6,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.model.LazyDataModel;
@@ -59,6 +57,7 @@ public class RolYetkiView implements Serializable {
 			 */
 			private static final long serialVersionUID = -3338650643514358924L;
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public List<RolYetki> load(int first, int pageSize,
 					String sortField, SortOrder sortOrder,
