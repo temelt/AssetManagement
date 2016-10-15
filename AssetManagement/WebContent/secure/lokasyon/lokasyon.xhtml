@@ -1,0 +1,94 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+template="/layout/template.xhtml">
+<ui:define name="pageContent">
+
+
+<h:form id="frm">
+
+<p:growl id="growl" showDetail="true" life="5000" autoUpdate="true"
+sticky="false" />
+
+<p:dataTable id="tblLokasyon" var="l"
+value="#{lokasyonView.lazyModel}" lazy="true" rows="10"
+paginator="true" rowKey="#{l.id}"
+paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+currentPageReportTemplate="Toplam Kayıt Sayısı {totalRecords} "
+rowsPerPageTemplate="5,10,15">
+<f:facet name="header">
+Tanımlı Lokasyon Listesi 
+</f:facet>
+
+<p:column headerText="No">
+<h:outputText value="#{l.id}" />
+</p:column>
+
+<p:column headerText="Tanım" filterBy="#{l.tanim}">
+<h:outputText value="#{l.tanim}" />
+</p:column>
+<p:column headerText="Kod" filterBy="#{l.kod}">
+<h:outputText value="#{l.kod}" />
+</p:column>
+
+<p:column headerText="İşlemler">
+<p:commandButton icon="ui-icon-trash"
+action="#{lokasyonView.sil(l.id)}" update=":frm:tblLokasyon">
+<p:confirm header="Silme Onayı"
+message="Silmek İstediginizden Emin misiniz?"
+icon="ui-icon-alert" />
+</p:commandButton>
+<p:commandButton icon="ui-icon-pencil"
+actionListener="#{lokasyonView.guncelle(l.id)}"
+oncomplete="PF('dlg2').show();" update=":frm:dlg2 "></p:commandButton>
+
+<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+<p:commandButton value="Evet" type="button"
+styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+<p:commandButton value="İptal" type="button"
+styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+</p:confirmDialog>
+</p:column>
+<f:facet name="footer">
+<p:commandButton value="Yeni" type="button"
+onclick="PF('dlg2').show();" />
+</f:facet>
+</p:dataTable>
+
+
+<p:dialog header="Lokasyon Bilgileri" draggable="false"
+resizable="false" id="dlg2" widgetVar="dlg2" modal="true">
+<p:panelGrid columns="2">
+
+<h:outputText value="Ad:" />
+<p:inputText value="#{lokasyonView.lokasyon.tanim}" />
+
+<h:outputText value="Kod :" />
+<p:inputText value="#{lokasyonView.lokasyon.kod}" />
+
+</p:panelGrid>
+<p:commandButton value="Kaydet"
+actionListener="#{lokasyonView.kaydet}"
+update=":frm:tblLokasyon, :frm:dlg2 "
+oncomplete="PF('dlg2').hide();"></p:commandButton>
+</p:dialog>
+<h:panelGrid columns="3" cellpadding="5">
+        <h:outputLabel for="menu" value="Location:" />
+        <p:selectCheckboxMenu id="menu" value="#{checkboxView.selectedCities}" label="Cities"
+                              filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+            <f:selectItems value="#{checkboxView.cities}" />
+        </p:selectCheckboxMenu>
+        <p:commandLink value="Submit" update="display" />
+    </h:panelGrid>
+ 
+    <p:outputPanel id="display" style="width:250px;padding-left:5px;margin-top:10px">
+        <p:dataList value="#{checkboxView.selectedCities}" var="city" emptyMessage="Oda seçilmedi">
+            #{city}
+        </p:dataList>
+    </p:outputPanel>
+</h:form>
+</ui:define>
+</ui:composition>

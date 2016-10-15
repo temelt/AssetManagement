@@ -5,85 +5,89 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/layout/template.xhtml">
 	<ui:define name="pageContent">
-	
-	<h:form id="frm">
-	
-	
-	
-	<p:dataScroller  id="tblPersonel" value="#{personelView.lazyModel}" var="p" chunkSize="10" lazy="true" >
-        
-        <f:facet name="header" >
-            
-            <h:graphicImage library="img" name="useroperation.png" style="width:30px"/>
-            
+		<h:form id="frm">
+			<p:dataScroller id="tblPersonel" value="#{personelView.lazyModel}"
+				var="p" chunkSize="10" lazy="true">
+				<f:facet name="header">
+
+					<h:graphicImage library="img" name="useroperation.png"
+						style="width:30px" />
             Personel Listesi ve İşlemleri 
-            
-          <!--toplam kayıt sayis cagıramadım?-->
-          
-        </f:facet>
- 
-        <h:panelGrid columns="6" style="width:100%" columnClasses="logo,text,islem" >
-            
-  			<h:graphicImage library="img" name="usersettings.png" style="width:50px"/>
-            <p:outputPanel>
-                						<h:panelGrid columns="3" cellpadding="5" style="width:200px">
-                   
-                   <h:outputText  value="No:" style="color:red;font-weight: bold" />
-                   <h:outputText value="#{p.id}" style="font-weight: bold" /><br />
-                    
-                    <h:outputText value="Ad:" />
-                    <h:outputText value="#{p.kisi.ad}" style="font-weight: bold"/><br />
-                    
-                    <h:outputText value="Soyad:" />
-                    <h:outputText value="#{p.kisi.soyad}" style="font-weight: bold"/><br />
- 
-                    <h:outputText value="Sicil No:" />
-                    <h:outputText value="#{p.sicilNo}" style="font-weight: bold"/><br />
-                    
-                    <h:outputText value="Maas:" />
-                    <h:outputText value="#{p.maas}" style="font-weight: bold"/><br />
-                    
-                    <h:outputText value="İşlemler:"  />
-                    
-                    <p:commandButton icon="ui-icon-trash" action="#{personelView.sil(p.id)}" update=":frm:tblPersonel">
-						<p:confirm header="Silme Onayı" message="Silmek İstediginizden Emin misiniz?" icon="ui-icon-alert" />
-					</p:commandButton>
-				
-				<p:commandButton icon="ui-icon-pencil" actionListener="#{personelView.guncelle(p.id)}" oncomplete="PF('dlg2').show();" update=":frm:dlg2 " ></p:commandButton>
-				
-			   <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-			        <p:commandButton value="Evet" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-			        <p:commandButton value="İptal" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-			    </p:confirmDialog>
-                    					</h:panelGrid>
-              		</p:outputPanel>
-        </h:panelGrid>
-                 
-                    
-	</p:dataScroller>
-	<p:dialog header="Personel Bilgileri" draggable="false" resizable="false"
-			id="dlg2" widgetVar="dlg2" modal="true" >
-			<p:panelGrid columns="2">
+				</f:facet>
+				<h:panelGrid columns="6" style="width:100%"
+					columnClasses="logo,text,islem">
 
-				<h:outputText value="Ad:" />                           <!-- AD VE SOYAD DOLU GELMIYOR ?-->
-				<p:inputText value="#{kisiView.kisi.ad}" />
+					<h:graphicImage library="img" name="usersettings.png"
+						style="width:50px" />
+					<p:outputPanel>
+						<h:panelGrid columns="3" cellpadding="5" style="width:200px">
 
-				<h:outputText value="Soyad:" />
-				<p:inputText value="#{kisiView.kisi.soyad}" />
+							<h:outputText value="No:" style="color:red;font-weight: bold" />
+							<h:outputText value="#{p.id}" style="font-weight: bold" />
+							<br />
 
-				<h:outputText value="Sicil No:" />
-				<p:inputText value="#{personelView.personel.sicilNo}" />
+							<h:outputText value="Ad:" />
+							<h:outputText value="#{p.kisi.ad}" style="font-weight: bold" />
+							<br />
 
+							<h:outputText value="Soyad:" />
+							<h:outputText value="#{p.kisi.soyad}" style="font-weight: bold" />
+							<br />
 
+							<h:outputText value="Sicil No:" />
+							<h:outputText value="#{p.sicilNo}" style="font-weight: bold" />
+							<br />
 
+							<h:outputText value="Maas:" />
+							<h:outputText value="#{p.maas}" style="font-weight: bold" />
+							<br />
 
+							<h:outputText value="İşlemler:" />
 
-			</p:panelGrid>
-			<p:commandButton value="Kaydet" actionListener="#{personelView.kaydet}" update=":frm:tblPersonel, :frm:dlg2 " oncomplete="PF('dlg2').hide();"></p:commandButton>
-		</p:dialog>
-	
-	
-	
-	</h:form>
+							<p:commandButton icon="ui-icon-trash"
+								action="#{personelView.sil(p.id)}" update=":frm:tblPersonel">
+								<p:confirm header="Silme Onayı"
+									message="Silmek İstediginizden Emin misiniz?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-pencil"
+								actionListener="#{personelView.guncelle(p.id)}"
+								oncomplete="PF('dlg2').show();" update=":frm:dlg2 "></p:commandButton>
+
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Evet" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="İptal" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+						</h:panelGrid>
+					</p:outputPanel>
+				</h:panelGrid>
+
+			</p:dataScroller>
+			<p:dialog header="Personel Bilgileri" draggable="false"
+				resizable="false" id="dlg2" widgetVar="dlg2" modal="true">
+				<p:panelGrid columns="2">
+
+					<h:outputText value="Ad:" />
+					<!-- AD VE SOYAD DOLU GELMIYOR ?-->
+					<p:inputText value="#{kisiView.kisi.ad}" />
+
+					<h:outputText value="Soyad:" />
+					<p:inputText value="#{kisiView.kisi.soyad}" />
+
+					<h:outputText value="Sicil No:" />
+					<p:inputText value="#{personelView.personel.sicilNo}" />
+
+				</p:panelGrid>
+				<p:commandButton value="Kaydet"
+					actionListener="#{personelView.kaydet}"
+					update=":frm:tblPersonel, :frm:dlg2 "
+					oncomplete="PF('dlg2').hide();"></p:commandButton>
+			</p:dialog>
+
+		</h:form>
 	</ui:define>
-	</ui:composition>
+</ui:composition>

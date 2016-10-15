@@ -1,4 +1,4 @@
-package com.vektorel.assetman.web.service.yazilim;
+package com.vektorel.assetman.web.service.lokasyon;
 
 import java.util.List;
 import java.util.Map;
@@ -14,38 +14,61 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.vektorel.assetman.web.entity.Yazilim;
+import com.vektorel.assetman.web.entity.Lokasyon;
 import com.vektorel.assetman.web.service.BaseDao;
 import com.vektorel.assetman.web.utilities.IDataService;
 import com.vektorel.assetman.web.utilities.PagingResult;
+import com.vektorel.assetman.web.utilities.ex.DbException;
 
-@Service("yazilimService")
-public class YazilimService implements IDataService<Yazilim> {
-
+@Service("LokasyonService")
+public class LokasyonService implements IDataService<Lokasyon> {
 	@Autowired
 	private transient BaseDao baseDao;
 
-	@Override
-	public Yazilim save(Yazilim entity) {
-		return (Yazilim) baseDao.save(entity);
-
+	public LokasyonService() {
+		super();
+		System.out.println("LokasyonService Oluþturuldu.");
 	}
 
 	@Override
-	public Yazilim update(Yazilim entity) {
-		return (Yazilim) baseDao.update(entity);
+	public Lokasyon save(Lokasyon entity) throws DbException {
+		return (Lokasyon) baseDao.save(entity);
+	}
+
+	public void delete(Long id) {
+		try {
+			delete(getById(id));
+		} catch (DbException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public boolean delete(Yazilim entity) {
+	public Lokasyon update(Lokasyon entity) throws DbException {
+		return (Lokasyon) baseDao.update(entity);
+	}
+
+	@Override
+	public boolean delete(Lokasyon entity) throws DbException {
 		return baseDao.delete(entity);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Lokasyon> getAll() {
+		return (List<Lokasyon>) baseDao.getAll(Lokasyon.class);
+	}
+
+	@Override
+	public Lokasyon getById(Long entityId) {
+		return (Lokasyon) baseDao.getById(entityId, Lokasyon.class);
 	}
 
 	@Transactional
 	public PagingResult getAllByPaging(int first, int pageSize,
 			SortOrder sortOrder, Map<String, Object> filters) {
 		Session session = baseDao.getSession();
-		Criteria criteria = session.createCriteria(Yazilim.class);
+		Criteria criteria = session.createCriteria(Lokasyon.class);
 		if (filters.get("ad") != null) {
 			criteria.add(Restrictions.ilike("ad", filters.get("ad").toString(),
 					MatchMode.ANYWHERE));
@@ -58,20 +81,6 @@ public class YazilimService implements IDataService<Yazilim> {
 		criteria.setFirstResult(first);
 		criteria.addOrder(Order.desc("id"));
 		return new PagingResult(criteria.list(), totalResult);
-	}
-
-	@Override
-	public List<Yazilim> getAll() {
-		return (List<Yazilim>) baseDao.getAll(Yazilim.class);
-	}
-
-	@Override
-	public Yazilim getById(Long entityId) {
-		return (Yazilim) baseDao.getById(entityId, Yazilim.class);
-	}
-
-	public void delete(Long id) {
-		delete(getById(id));
 	}
 
 }

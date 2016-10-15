@@ -1,53 +1,90 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/layout/template.xhtml">
+	<ui:define name="pageContent">
 
-<h:head>
-	<title>Asset Management System</title>
-</h:head>
-<h:body bgcolor="white">
 
-	<h:form id="frm">
-		<p:dataTable id="tblYazilim" var="y" value="#{yazilimView.yazilims}" rows="10"
-			paginator="true"
-			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			rowsPerPageTemplate="5,10,15">
-			<p:column headerText="No">
-				<h:outputText value="#{y.id}" />
-			</p:column>
+		<h:form id="frm">
 
-			<p:column headerText="Tanım">
-				<h:outputText value="#{y.tanim}" />
-			</p:column>
+			<p:growl id="growl" showDetail="true" life="5000" autoUpdate="true"
+				sticky="false" />
 
-			<p:column headerText="Lisans Kod">
-				<h:outputText value="#{y.lisansKod}" />
-			</p:column>
+			<p:dataTable id="tblYazilim" var="y" value="#{yazilimView.lazyModel}"
+				rows="10" paginator="true" lazy="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15">
+				<p:column headerText="No">
+					<h:outputText value="#{y.id}" />
+				</p:column>
 
-			<p:column headerText="Lisans Fiyatı">
-				<h:outputText value="#{y.lisansFiyati}" />
-			</p:column>
+				<p:column headerText="Tanım">
+					<h:outputText value="#{y.tanim}" />
+				</p:column>
 
-			<p:column headerText="Lisans Başlama Tarihi">
-				<h:outputText value="#{y.lisansBaslamaTarihi}" />
-			</p:column>
-			<p:column headerText="Lisans Bitiş Tarihi">
-				<h:outputText value="#{y.lisansBitisTarihi}" />
-			</p:column>
-			<p:column headerText="Firma">
-				<h:outputText value="#{y.firma}" />
-			</p:column>
-			<p:column headerText="Açıklama">
-				<h:outputText value="#{y.aciklama}" />
-			</p:column>
-			<p:column headerText="İşlemler">
-				<p:commandButton icon="ui-icon-trash" actionListener="#{yazilimView.sil(y.id)}" update=":frm:tblYazilim"></p:commandButton>
-				<p:commandButton icon="ui-icon-pencil" ></p:commandButton>
-			</p:column>
-		</p:dataTable>
-		
-	</h:form>
-</h:body>
-</html>
+				<p:column headerText="Lisans Kod">
+					<h:outputText value="#{y.lisansKod}" />
+				</p:column>
+
+				<p:column headerText="Lisans Fiyatı">
+					<h:outputText value="#{y.lisansFiyati}" />
+				</p:column>
+
+				<p:column headerText="Lisans Başlama Tarihi">
+					<h:outputText value="#{y.lisansBaslamaTarihi}" />
+				</p:column>
+				<p:column headerText="Lisans Bitiş Tarihi">
+					<h:outputText value="#{y.lisansBitisTarihi}" />
+				</p:column>
+				<p:column headerText="Firma">
+					<h:outputText value="#{y.firma}" />
+				</p:column>
+				<p:column headerText="Açıklama">
+					<h:outputText value="#{y.aciklama}" />
+				</p:column>
+				<p:column headerText="İşlemler">
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{yazilimView.sil(y.id)}" update=":frm:tblYazilim"></p:commandButton>
+					<p:commandButton icon="ui-icon-pencil"></p:commandButton>
+				</p:column>
+				<f:facet name="footer">
+					<p:commandButton value="Ekle" type="button"
+						onclick="PF('dlg2').show();" />
+				</f:facet>
+			</p:dataTable>
+			<p:dialog header="Yazılım Bilgileri" draggable="false"
+				resizable="false" id="dlg2" widgetVar="dlg2" modal="true">
+				<p:panelGrid columns="1">
+					<h:outputText value="Tanım:" />
+					<p:inputText value="#{yazilimView.yazilim.tanim}" />
+
+					<h:outputText value="Lisans Kod:" />
+					<p:inputText value="#{yazilimView.yazilim.lisansKod}" />
+
+					<h:outputText value="Lisans Fiyatı:" />
+					<p:inputText value="#{yazilimView.yazilim.lisansFiyati}" />
+
+					<h:outputText value="Lisans Başlama Tarihi :" />
+					<p:calendar value="#{yazilimView.yazilim.lisansBaslamaTarihi}"></p:calendar>
+					<h:outputText value="Lisans Bitiş Tarihi :" />
+					<p:calendar value="#{yazilimView.yazilim.lisansBitisTarihi}"></p:calendar>
+					<p:outputLabel value="Yazılım Firması :" />
+					<p:autoComplete id="acompFirma"
+						value="#{yazilimView.yazilim.firma}"
+						completeMethod="#{yazilimView.acompFirma}" var="firma"
+						itemLabel="#{firma.adi}" itemValue="#{firma}"
+						converter="#{firmaConverter}" forceSelection="true">
+					</p:autoComplete>
+					<h:outputText value="Açıklama:" />
+					<p:inputText value="#{yazilimView.yazilim.aciklama}" />
+					<p:commandButton value="Kaydet"
+						actionListener="#{yazilimView.kaydet}"
+						update=":frm:tblYazilim, :frm:dlg2 "
+						oncomplete="PF('dlg2').hide();"></p:commandButton>
+				</p:panelGrid>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
