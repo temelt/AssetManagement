@@ -71,6 +71,14 @@ public class Yerlesim extends BaseEntity{
 	public void setYerlesimTip(YerlesimTip yerlesimTip) {
 		this.yerlesimTip = yerlesimTip;
 	}
-	
+	@Override
+	public boolean equals(Object arg0) {
+		if(arg0 instanceof Yerlesim){
+			if( ((Yerlesim)arg0).getId().equals(this.getId()) )
+				return true;
+		}
+		return false;
+	}
+
 	
 }

@@ -26,6 +26,7 @@ public class Kisi extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	
 	public Kisi() {
+		this.adres=new Adres();
 	}
 	
 	

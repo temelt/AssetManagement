@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.vektorel.assetman.web.entity.Adres;
 import com.vektorel.assetman.web.entity.Kisi;
 import com.vektorel.assetman.web.service.kisi.KisiService;
 import com.vektorel.assetman.web.utilities.PagingResult;
@@ -66,6 +67,9 @@ public class KisiView implements Serializable{
 	
 	public void guncelle(Long id) {
 		kisi=kisiService.getById(id);
+		if(kisi.getAdres()==null){
+			kisi.setAdres(new Adres());
+		}
 	}
 	
 	public void sil(Long id) {

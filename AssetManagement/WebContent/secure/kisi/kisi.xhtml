@@ -39,6 +39,15 @@
 			<p:column headerText="Doğum Tarihi">
 				<h:outputText value="#{k.dogumTarihi}" />
 			</p:column>
+			
+			<p:column headerText="il">
+				<h:outputText value="#{k.adres.il.tanim}" />
+			</p:column>
+			
+			<p:column headerText="ilçe">
+				<h:outputText value="#{k.adres.ilce.tanim}" />
+			</p:column>
+			
 			<p:column headerText="İşlemler">
 				<p:commandButton icon="ui-icon-trash" action="#{kisiView.sil(k.id)}" update=":frm:tblKisi">
 					<p:confirm header="Silme Onayı" message="Silmek İstediginizden Emin misiniz?" icon="ui-icon-alert" />
@@ -71,6 +80,12 @@
 
 				<h:outputText value="Doğum Tarihi :" />
 				<p:calendar value="#{kisiView.kisi.dogumTarihi}"  ></p:calendar>
+				
+				<h:outputText value="İl :" />
+				<p:selectOneMenu value="#{kisiView.kisi.adres.il}" converter="#{yerlesimConverter}" style="width:160px">
+		            <f:selectItems value="#{sabitlerView.ilListesi}" var="il" itemLabel="#{il.tanim}" itemValue="#{il}" />		 
+		        </p:selectOneMenu>
+				
 
 			</p:panelGrid>
 			<p:commandButton value="Kaydet" actionListener="#{kisiView.kaydet}" update=":frm:tblKisi, :frm:dlg2 " oncomplete="PF('dlg2').hide();"></p:commandButton>
