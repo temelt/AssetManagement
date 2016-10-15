@@ -48,7 +48,7 @@ public  class YerlesimService {
 	@Transactional
 	public List<Yerlesim> getByParentId(Long entityId) {
 		Criteria criteria=baseDao.getSession().createCriteria(Yerlesim.class);
-		criteria.add(Restrictions.eq("ustYerlesim", entityId));
+		criteria.add(Restrictions.eq("ustYerlesim.id", entityId));
 		return  criteria.list();
 	}
 	

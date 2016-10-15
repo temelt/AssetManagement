@@ -66,8 +66,6 @@ public class PersonelService implements IDataService<Personel> {
 		Session session = baseDao.getSession();
 		Criteria criteria = session.createCriteria(Personel.class);
 		
-		
-		
 		int totalResult = Integer.parseInt(criteria.setProjection(Projections.rowCount()).uniqueResult().toString());
 		
 		criteria.setProjection(null);	

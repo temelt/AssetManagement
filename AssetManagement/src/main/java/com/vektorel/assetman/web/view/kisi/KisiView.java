@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Controller;
 
 import com.vektorel.assetman.web.entity.Adres;
 import com.vektorel.assetman.web.entity.Kisi;
+import com.vektorel.assetman.web.entity.Yerlesim;
+import com.vektorel.assetman.web.service.YerlesimService;
 import com.vektorel.assetman.web.service.kisi.KisiService;
 import com.vektorel.assetman.web.utilities.PagingResult;
 
@@ -33,9 +36,12 @@ public class KisiView implements Serializable{
 	
 	@Autowired
 	private transient KisiService kisiService;
+	@Autowired
+	private transient YerlesimService yerlesimService;
 	
 	Kisi kisi;
 	LazyDataModel<Kisi> lazyModel;
+	List<Yerlesim> ilceListesi;
 	
 	public KisiView() {
 		super();
@@ -67,15 +73,26 @@ public class KisiView implements Serializable{
 	
 	public void guncelle(Long id) {
 		kisi=kisiService.getById(id);
-		if(kisi.getAdres()==null){
+		if(kisi.getAdres()==null)
 			kisi.setAdres(new Adres());
-		}
+		if(kisi.getAdres().getIl()!=null)
+			ilceListesi=yerlesimService.getByParentId(kisi.getAdres().getIl().getId());
+	}
+	
+	public  void yeni() {
+		ilceListesi=null;
+		kisi=new Kisi();
 	}
 	
 	public void sil(Long id) {
 		kisiService.delete(id);
 		kisi=new Kisi();
 		listele();
+	}
+	
+	public void ilChange() {
+		ilceListesi = yerlesimService.getByParentId(kisi.getAdres().getIl().getId());
+		RequestContext.getCurrentInstance().update("frm:cmbIlce");
 	}
 	
 	public void listele(){
@@ -118,6 +135,10 @@ public class KisiView implements Serializable{
 	
 	public LazyDataModel<Kisi> getLazyModel() {
 		return lazyModel;
+	}
+	
+	public List<Yerlesim> getIlceListesi() {
+		return ilceListesi;
 	}
 	
 }

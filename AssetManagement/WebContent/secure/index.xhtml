@@ -6,7 +6,10 @@
 	template="/layout/template.xhtml">
 	<ui:define name="pageContent">
 		<h:form>
-
+			<h:panelGrid columns="2"  style="width:100%">
+				<p:chart type="line" model="#{indexView.lineChartModel}" style="width:400px;" />
+				<p:chart type="bar" model="#{indexView.model}" style="width:400px;" />
+			</h:panelGrid>
 		</h:form>
 	</ui:define>
 </ui:composition>

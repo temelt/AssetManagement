@@ -19,7 +19,7 @@ public class YerlesimConverter implements Converter {
 
 	public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
 		try {
-			if (value != null && value.trim().length() > 0) {
+			if (value != null && value.trim().length() > 0 && !value.equals("Seçiniz")) {
 				return service.getById(Long.parseLong(value));
 			} else {
 				return null;
@@ -33,7 +33,7 @@ public class YerlesimConverter implements Converter {
 
 	public String getAsString(FacesContext fc, UIComponent uic, Object o) {
 		try {
-			if (o != null)
+			if (o != null )
 				return String.valueOf(((Yerlesim) o).getId());
 		} catch (Exception e) {
 			e.printStackTrace();
