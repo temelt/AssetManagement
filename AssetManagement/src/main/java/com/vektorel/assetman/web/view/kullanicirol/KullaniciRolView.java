@@ -13,6 +13,9 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import com.vektorel.assetman.web.entity.Kullanici;
 import com.vektorel.assetman.web.entity.KullaniciRol;
@@ -23,8 +26,8 @@ import com.vektorel.assetman.web.service.rol.RolService;
 import com.vektorel.assetman.web.utilities.PagingResult;
 import com.vektorel.assetman.web.utilities.ex.DbException;
 
-@ManagedBean(name="kullaniciRolView")
-@ViewScoped
+@Controller("kullaniciRolView")
+@Scope("view")
 public class KullaniciRolView implements Serializable{
 
 	/**
@@ -32,17 +35,19 @@ public class KullaniciRolView implements Serializable{
 	 */
 	private static final long serialVersionUID = 4944998596765498275L;
 	LazyDataModel<KullaniciRol> lazyDataModel;
-	KullaniciRol kullaniciRol = null;
-	KullaniciRolService kullaniciRolService = null;
-	RolService rolService = null;
-	KullaniciService kullaniciService = null;
+
+	KullaniciRol kullaniciRol;
+	@Autowired
+	private transient KullaniciRolService kullaniciRolService ;
+	@Autowired
+	private transient RolService rolService ;
+	@Autowired
+	private transient KullaniciService kullaniciService ;
 	
 	@PostConstruct
 	private void init() {
-		kullaniciRolService = new KullaniciRolService();
+
 		kullaniciRol = new KullaniciRol();
-		rolService = new RolService();
-		kullaniciService=new KullaniciService();
 		listele();
 	}
 

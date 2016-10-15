@@ -56,11 +56,11 @@
 					<p:panelGrid columns="2">
 						<p:outputLabel value="Kullanıcı Adı:" />
 	    				<p:autoComplete id="acompKullanici" value="#{kullaniciRolView.kullaniciRol.kullanici}" completeMethod="#{kullaniciRolView.acompKullanici}"
-			                        var="kullanici" itemLabel="#{kullanici.username}" itemValue="#{kullanici}" converter="kullaniciConverter" forceSelection="true">
+			                        var="kullanici" itemLabel="#{kullanici.username}" itemValue="#{kullanici}" converter="#{kullaniciConverter}" forceSelection="true">
 			     		 </p:autoComplete>
 						<p:outputLabel value="Rol Kodu:" />
 	    				<p:autoComplete id="acompRol" value="#{kullaniciRolView.kullaniciRol.rol}" completeMethod="#{kullaniciRolView.acompRol}"
-			                        var="rol" itemLabel="#{rol.kod}" itemValue="#{rol}" converter="rolConverter" forceSelection="true">
+			                        var="rol" itemLabel="#{rol.kod}" itemValue="#{rol}" converter="#{rolConverter}" forceSelection="true">
 			     		 </p:autoComplete>
 						
 					</p:panelGrid>

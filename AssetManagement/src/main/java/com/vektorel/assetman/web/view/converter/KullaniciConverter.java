@@ -5,16 +5,21 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import com.vektorel.assetman.web.entity.Kullanici;
 import com.vektorel.assetman.web.service.kullanici.KullaniciService;
 
-@FacesConverter("kullaniciConverter")
+@Component("kullaniciConverter")
+@Scope("request")
 public class KullaniciConverter implements Converter{
-
+	@Autowired
+	private transient KullaniciService service;
 	   public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
 	        if(value != null && value.trim().length() > 0) {
 	            try {
-	            	KullaniciService service = new KullaniciService();
 	                return service.getById(Long.parseLong(value));
 	            } catch(NumberFormatException e) {
 	               e.printStackTrace();

@@ -3,6 +3,8 @@ package com.vektorel.assetman.web.service.yetki;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
@@ -10,6 +12,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.vektorel.assetman.web.entity.RolYetki;
 import com.vektorel.assetman.web.entity.Yetki;
@@ -18,8 +22,10 @@ import com.vektorel.assetman.web.utilities.IDataService;
 import com.vektorel.assetman.web.utilities.PagingResult;
 import com.vektorel.assetman.web.utilities.ex.DbException;
 
+@Service("rolYetkiService")
 public class RolYetkiService implements IDataService<RolYetki> {
-	BaseDao baseDao = new BaseDao();
+	@Autowired
+	private transient BaseDao baseDao;
 
 	@Override
 	public RolYetki save(RolYetki entity)  throws DbException{
@@ -50,7 +56,7 @@ public class RolYetkiService implements IDataService<RolYetki> {
 		delete(getById(id));
 	}
 
-
+	@Transactional
 	public PagingResult getAllByPaging(int first, int pageSize,
 			SortOrder sortOrder, Map<String, Object> filters) {
 		Session session = baseDao.getSession();

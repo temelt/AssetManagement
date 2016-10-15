@@ -5,16 +5,21 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import com.vektorel.assetman.web.entity.Yetki;
 import com.vektorel.assetman.web.service.yetki.YetkiService;
 
-@FacesConverter("yetkiConverter")
+@Component("yetkiConverter")
+@Scope("request")
 public class YetkiConverter implements Converter{
-
+	@Autowired
+	private transient YetkiService service ;
 	   public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
 	        if(value != null && value.trim().length() > 0) {
 	            try {
-	            	YetkiService service = new YetkiService();
 	                return service.getById(Long.parseLong(value));
 	            } catch(NumberFormatException e) {
 	               e.printStackTrace();

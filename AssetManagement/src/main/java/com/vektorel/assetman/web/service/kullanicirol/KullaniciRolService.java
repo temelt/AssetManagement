@@ -3,6 +3,8 @@ package com.vektorel.assetman.web.service.kullanicirol;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
@@ -10,15 +12,18 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.vektorel.assetman.web.service.BaseDao;
 import com.vektorel.assetman.web.utilities.IDataService;
 import com.vektorel.assetman.web.utilities.PagingResult;
 import com.vektorel.assetman.web.utilities.ex.DbException;
 
+@Service("kullaniciRolService")
 public class KullaniciRolService<KullaniciRol> implements IDataService<KullaniciRol> {
-
-	BaseDao baseDao=new BaseDao();
+	@Autowired
+	private transient BaseDao baseDao;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -52,7 +57,7 @@ public class KullaniciRolService<KullaniciRol> implements IDataService<Kullanici
 	public void delete(Long id) throws DbException{
 		delete(getById(id));
 	}
-
+	@Transactional
 	public PagingResult getAllByPaging(int first, int pageSize,
 			SortOrder sortOrder, Map<String, Object> filters) {
 		Session s = baseDao.getSession();

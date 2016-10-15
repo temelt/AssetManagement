@@ -3,6 +3,8 @@ package com.vektorel.assetman.web.service.yetki;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
@@ -10,6 +12,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.vektorel.assetman.web.entity.Yetki;
 import com.vektorel.assetman.web.service.BaseDao;
@@ -17,8 +21,11 @@ import com.vektorel.assetman.web.utilities.IDataService;
 import com.vektorel.assetman.web.utilities.PagingResult;
 import com.vektorel.assetman.web.utilities.ex.DbException;
 
+@Service("yetkiService")
 public class YetkiService implements IDataService<Yetki> {
-	BaseDao baseDao = new BaseDao();
+	
+	@Autowired
+	private transient BaseDao baseDao ;
 
 	@Override
 	public Yetki save(Yetki entity) throws DbException{
@@ -49,6 +56,7 @@ public class YetkiService implements IDataService<Yetki> {
 		delete(getById(id));
 	}
 
+	@Transactional
 	public PagingResult getAllByPaging(int first, int pageSize,
 			SortOrder sortOrder, Map<String, Object> filters) {
 		Session s = baseDao.getSession();
@@ -66,7 +74,8 @@ public class YetkiService implements IDataService<Yetki> {
 		criteria.addOrder(Order.desc("id"));
 		return new PagingResult(criteria.list(), totalResult);
 	}
-
+	
+	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<Yetki> acompYetki(String term) {
 		Session session = baseDao.getSession();

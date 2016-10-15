@@ -1,8 +1,9 @@
 package com.vektorel.assetman.web.service.kullanici;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+
+import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -11,21 +12,24 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.vektorel.assetman.web.entity.Kullanici;
-import com.vektorel.assetman.web.entity.Rol;
 import com.vektorel.assetman.web.service.BaseDao;
 import com.vektorel.assetman.web.utilities.IDataService;
 import com.vektorel.assetman.web.utilities.PagingResult;
 import com.vektorel.assetman.web.utilities.ex.DbException;
 
+@Service("kullaniciService")
 public class KullaniciService implements IDataService<Kullanici> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1613837182854052645L;
-	BaseDao baseDao = new BaseDao();
+	@Autowired
+	private transient BaseDao baseDao;
 
 	@Override
 	public Kullanici save(Kullanici entity) throws DbException {
@@ -50,6 +54,7 @@ public class KullaniciService implements IDataService<Kullanici> {
 		return baseDao.delete(entity);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Kullanici> getAll() {
 		return baseDao.getAll(Kullanici.class);
@@ -60,6 +65,7 @@ public class KullaniciService implements IDataService<Kullanici> {
 		return (Kullanici) baseDao.getById(entityId, Kullanici.class);
 	}
 
+	@Transactional
 	public PagingResult getAllByPaging(int first, int pageSize,
 			SortOrder sortOrder, Map<String, Object> filters) {
 		Session session = baseDao.getSession();
@@ -81,6 +87,7 @@ public class KullaniciService implements IDataService<Kullanici> {
 		return new PagingResult(criteria.list(), totalResult);
 	}
 
+	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<Kullanici> acompKullanici(String term) {
 		Session session = baseDao.getSession();
