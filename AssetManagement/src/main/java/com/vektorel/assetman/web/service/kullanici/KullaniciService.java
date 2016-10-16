@@ -13,6 +13,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.vektorel.assetman.web.entity.Kullanici;
@@ -26,11 +27,16 @@ public class KullaniciService {
 	@Autowired
 	private transient BaseDao baseDao;
 
+	Md5PasswordEncoder passwordEncoder=new Md5PasswordEncoder();
+	
 	public Kullanici save(Kullanici entity) throws DbException {
+		
+		entity.setPassword( passwordEncoder.encodePassword(entity.getPassword(), null) );
 		return (Kullanici) baseDao.save(entity);
 	}
 
 	public Kullanici update(Kullanici entity) throws DbException {
+		entity.setPassword( passwordEncoder.encodePassword(entity.getPassword(), null) );
 		return (Kullanici) baseDao.update(entity);
 	}
 
@@ -86,5 +92,25 @@ public class KullaniciService {
 		criteria.addOrder(Order.asc("username"));
 		return criteria.list();
 	}
+
+	@Transactional
+	public Kullanici getByUsername(String username) {
+		Session session = baseDao.getSession();
+		Criteria criteria = session.createCriteria(Kullanici.class);		
+		criteria.add(Restrictions.eq("username",username));		
+		return (Kullanici) criteria.uniqueResult();
+	}
+
+	@Transactional
+	public int count() {
+		Session session = baseDao.getSession();
+		Criteria criteria = session.createCriteria(Kullanici.class);		
+		int totalResult = Integer.parseInt(criteria
+				.setProjection(Projections.rowCount()).uniqueResult()
+				.toString());
+		return totalResult;
+	}
+	
+
 
 }

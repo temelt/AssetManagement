@@ -1,7 +1,13 @@
 package com.vektorel.assetman.web.utilities;
 
-public class Istatistik {
+import java.io.Serializable;
 
+public class Istatistik implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7239000016444597673L;
 	String key;
 	String value;
 
