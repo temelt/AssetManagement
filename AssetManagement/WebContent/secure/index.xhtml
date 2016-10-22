@@ -5,10 +5,19 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/layout/template.xhtml">
 	<ui:define name="pageContent">
-		<h:form>
+		<h:form id="frmIndex">
 			<h:panelGrid columns="2"  style="width:100%">
 				<p:chart type="line" model="#{indexView.lineChartModel}" style="width:400px;" />
 				<p:chart type="bar" model="#{indexView.model}" style="width:400px;" />
+			</h:panelGrid>
+			
+			<h:panelGrid columns="3"  style="width:100%">
+				<p:selectOneMenu value="#{indexView.ulke}" style="width:160px">
+					<f:selectItem itemLabel="Seçiniz"></f:selectItem>
+		            <f:selectItems value="#{sabitlerView.ulkeListesi}" var="ulke" itemLabel="#{ulke}" itemValue="#{ulke}" />
+		        </p:selectOneMenu>
+				<p:commandButton actionListener="#{indexView.telefonKodu}" update=":frmIndex:inpTelKodu" value="Telefon Kod Sorgula"></p:commandButton>
+				<p:outputLabel id="inpTelKodu" value="#{indexView.ulkeTelKodu}"></p:outputLabel>
 			</h:panelGrid>
 		</h:form>
 	</ui:define>
