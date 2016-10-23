@@ -13,11 +13,11 @@
 		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 		http://www.springframework.org/schema/task
 		http://www.springframework.org/schema/task/spring-task-3.1.xsd">
-		
-	<aop:config proxy-target-class="true"/>
-	
+
+	<aop:config proxy-target-class="true" />
+
 	<aop:aspectj-autoproxy />
-	
+
 	<context:component-scan base-package="com.vektorel" />
 
 	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
@@ -30,7 +30,8 @@
 		</property>
 	</bean>
 
-	<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" />
+	<bean
+		class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" />
 
 	<bean id="dataSource" class="org.postgresql.jdbc3.Jdbc3PoolingDataSource"
 		destroy-method="close">
@@ -43,7 +44,8 @@
 		<property name="maxConnections" value="50" />
 	</bean>
 
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan" value="com.vektorel" />
 		<property name="hibernateProperties">
@@ -60,6 +62,10 @@
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean class="org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter">
+		<property name="baseAddress" value="http://localhost:8081/" />
 	</bean>
 
 </beans>

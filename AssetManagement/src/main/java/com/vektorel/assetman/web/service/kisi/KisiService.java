@@ -61,6 +61,13 @@ public class KisiService implements IDataService<Kisi>{
 		return (Kisi) baseDao.getById(entityId, Kisi.class);
 	}
 
+	@Transactional
+	public Kisi getByTC(String tc) {
+		Criteria criteria =baseDao.getSession().createCriteria(Kisi.class);
+		criteria.add(Restrictions.eq("tc", tc));
+		return (Kisi) criteria.uniqueResult();
+	}
+	
 	public void delete(Long id) {
 		delete(getById(id));		
 	}
