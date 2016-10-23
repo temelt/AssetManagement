@@ -62,9 +62,9 @@ public class SabitlerView implements Serializable {
 			}
 		}
 
-		CountrySoap countrySoap = (CountrySoap) new Country().getCountrySoap();
-		String countries = countrySoap.getCountries();
-		marshall(countries);
+//		CountrySoap countrySoap = (CountrySoap) new Country().getCountrySoap();
+//		String countries = countrySoap.getCountries();
+//		marshall(countries);
 
 	}
 
