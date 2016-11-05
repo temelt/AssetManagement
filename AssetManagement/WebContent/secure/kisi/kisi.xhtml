@@ -11,7 +11,7 @@
 	
 	<p:growl id="growl" showDetail="true" life="5000" autoUpdate="true" sticky="false" /> 
 	
-		<p:dataTable id="tblKisi" var="k" value="#{kisiView.lazyModel}" lazy="true" rows="10"
+		<p:dataTable id="tblKisi" widgetVar="tblKisi" var="k" value="#{kisiView.lazyModel}" lazy="true" rows="10"
 			paginator="true" rowKey="#{k.id}"
 			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			currentPageReportTemplate="Toplam Kayıt Sayısı {totalRecords} "
@@ -61,6 +61,7 @@
 			</p:column>
 			<f:facet name="footer">
 				 <p:commandButton value="Yeni" actionListener="#{kisiView.yeni}" oncomplete="PF('dlgKisi').show();" update=":frm:dlgKisi"/>
+				 <p:commandButton value="Temizle"  onclick="PF('tblKisi').clearFilters()"></p:commandButton>
 			</f:facet>
 		</p:dataTable>
 		
@@ -96,6 +97,7 @@
 
 			</p:panelGrid>
 			<p:commandButton value="Kaydet" actionListener="#{kisiView.kaydet}" update=":frm:tblKisi, :frm:dlgKisi " oncomplete="PF('dlgKisi').hide();"></p:commandButton>
+			
 		</p:dialog>
 	</h:form>
 	</ui:define>

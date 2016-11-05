@@ -4,11 +4,14 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/layout/template.xhtml">
-	<ui:define name="pageContent">
+	<ui:define name="pageContent" >
+
+	
 		<h:form id="frmIndex">
-			<h:panelGrid columns="2"  style="width:100%">
-				<p:chart type="line" model="#{indexView.lineChartModel}" style="width:400px;" />
-				<p:chart type="bar" model="#{indexView.model}" style="width:400px;" />
+		
+			<h:panelGrid columns="2"  style="width:100%" >
+				<p:chart type="line"  legendPosition="w"  model="#{indexView.lineChartModel}" style="width:400px;" />
+				<p:chart type="bar"  legendPosition="w" model="#{indexView.model}" style="width:400px;" />
 			</h:panelGrid>
 			
 			<h:panelGrid columns="3"  style="width:100%">

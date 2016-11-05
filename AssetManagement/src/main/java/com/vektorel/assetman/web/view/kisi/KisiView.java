@@ -22,9 +22,7 @@ import com.vektorel.assetman.web.service.YerlesimService;
 import com.vektorel.assetman.web.service.kisi.KisiService;
 import com.vektorel.assetman.web.utilities.PagingResult;
 
-//@ManagedBean
-//@ViewScoped
-//@Component
+
 @Controller("kisiView")
 @Scope("view")
 public class KisiView implements Serializable{
