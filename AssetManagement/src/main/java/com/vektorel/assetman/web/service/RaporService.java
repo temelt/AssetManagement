@@ -15,11 +15,12 @@ import com.vektorel.assetman.web.utilities.Istatistik;
 @Service
 public class RaporService {
 
-	private static final String kisiYilSayilari = "select count(id) as counts ,extract(year from dogumtarihi) as years  from gnl_kisi group by years order by years";
+	private static final String kisiYilSayilari = "select count(id) as counts ,extract(year from dogumtarihi) as years  from gnl_kisi where dogumtarihi is not null  group by years order by years";
 	
 	@Autowired
 	private DataSource dataSource;
 
+	
 	public List<Istatistik> getKisiYasGruplari() {
 		try {
 			Statement stmt = dataSource.getConnection().createStatement();
